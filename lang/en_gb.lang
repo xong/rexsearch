@@ -1,0 +1,97 @@
+a587_title_settings = Settings
+a587_title_generate = Maintenance
+a587_title_help = Help
+
+a587_settings_logicalmode = Logical search mode
+a587_settings_logicalmode_and = Conjunctive search (AND)
+a587_settings_logicalmode_or = Disjunctive Suche (OR)
+
+a587_settings_modi_header = Search modes
+
+a587_settings_textmode = Text mode
+a587_settings_textmode_plain = Search in text without HTML-Tags (plain)
+a587_settings_textmode_html = Search in text with HTML-Tags (HTML)
+a587_settings_textmode_both = Search in both (HTML and plain)
+
+a587_settings_title_indexmode = Indexing
+a587_settings_indexmode_label = Type
+a587_settings_indexmode_viahttp = Indexing of articles via a HTTP-GET-Request
+a587_settings_indexmode_viacache = Indexing of articles via redaxo cache (without template, article only)
+a587_settings_indexmode_viacachetpl = Indexing of articles ia redaxo cache (with template, same result as with HTTP-GET-Request)
+a587_settings_indexoffline = Index offline articles
+a587_settings_automaticindex_label = de(index) articles automatically (ADD, EDIT, DELETE)
+a587_settings_ep_outputfilter_label = Execute extension point "OUTPUT_FILTER"
+
+a587_settings_searchmode = MySQL search modus
+a587_settings_searchmode_like = LIKE (finds subwords, but slower)
+a587_settings_searchmode_match = MATCH AGAINST (finds only complete words, faster)
+
+a587_settings_highlight_header = Appearance of highlighted text
+a587_settings_surroundtags_start = start tag
+a587_settings_surroundtags_end = end tag
+
+a587_settings_limit = Maximum hit count
+a587_settings_maxteaserchars = Maximum character count for teaser
+a587_settings_maxhighlightchars = Maximum character count around highlighted texts
+
+a587_settings_highlight_label = Highlight type
+a587_settings_highlight_sentence = Starting at the beginning of the sentence, which contains at least one found search term
+a587_settings_highlight_paragraph = Starting at the beginning of the paragraph, which contains at least one found search term
+a587_settings_highlight_surroundtext = Every found text is displayed with the surrounding words
+a587_settings_highlight_surroundtextsingle = For every found search term only one text is displayed with the surrounding words
+a587_settings_highlight_teaser = Teaser with, if present, highlighted search terms
+a587_settings_highlight_array = Array with every found text for every search term
+a587_settings_highlight_sample = Sample text with search term <strong style="color:#000;background-color:#fff;padding:0 0.2em;border:1px solid #000;font-style:italic;">"velit esse" accusam</strong>
+
+a587_settings_similarwords_label = Fuzzy search
+a587_settings_similarwords_none = Deactivate
+a587_settings_similarwords_soundex = Soundex
+a587_settings_similarwords_metaphone = Metaphone
+a587_settings_similarwords_cologne = Kölner Phonetik
+a587_settings_similarwords_all = All
+
+a587_settings_exclude = Exclude words, Categories and Articles from the search
+a587_settings_exclude_blacklist = Words (comma-separated)
+a587_settings_exclude_categories = Categories
+a587_settings_exclude_articles = Articles
+
+a587_settings_include = Include database tables
+
+a587_settings_submitbutton = Save settings
+a587_settings_saved = Settings saved
+a587_settings_saved_warning = The search index has to be regenerated.
+
+a587_settings_generate_full = Generate total index
+a587_settings_generate_full_text = Deletes and rebuilds the index-table.
+a587_settings_generate_incremental = Generate index incrementally
+a587_settings_generate_incremental_text = When having problems with maximum execution time the index can be generated incrementally.
+a587_settings_generate_incremental_confirm = Start incremental indexing?
+a587_settings_generate_delete_cache = Clear search cache
+a587_settings_generate_delete_cache_text = If regenerating of the index is not nescessary, the search cache can be deleted exclusively.
+a587_settings_generate_cache_deleted = Search cache cleared
+a587_settings_generate_delete_keywords = Truncate keyword-index
+a587_settings_generate_delete_keywords_text = Deletes all keywords collected during the indexing process and with searches. These keywords are nescessary for the fuzzy search and should not be deleted.
+a587_settings_generate_delete_keywords_confirm = Do you really want to delete all keywords?
+a587_settings_generate_keywords_deleted = Keywords deleted
+a587_settings_generate_inprogress = Generating index. There will be a message when the process is complete.
+a587_settings_generate_done = Index generated
+a587_settings_generate_cancel = Indexing aborted
+a587_settings_generate_duration = Time: 
+a587_settings_generate_timeleft = Remaining: 
+
+a587_settings_fileext_header = File search
+a587_settings_fileext_label = Extensions <br />(keep empty for any files)
+a587_settings_file_mediapool = Index mediapool
+a587_settings_file_dirdepth_label = Directory depth
+a587_settings_folders_label = Include following directories
+a587_settings_folders_dirselect_label = Select Subdirectories of depth %DEPTH%
+
+a587_settings_show_all = Show all
+a587_settings_show_none = Hide all
+
+a587_ellipsis = …
+
+a587_cat_deleted = All articles are still included in the search index. You have to <a href="index.php?page=rexsearch&subpage=generate">regenerate the search index</a>.
+
+a587_help_wiki = The documentation of this addon can be found at <a href="http://wiki.redaxo.de/index.php?n=R4.RexSearch">http://wiki.redaxo.de/index.php?n=R4.RexSearch</a>.
+a587_help_forum = Any questions or suggestions can be asked/made at <a href="http://forum.redaxo.de/ftopic12965">http://forum.redaxo.de/ftopic12965</a>.

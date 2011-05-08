@@ -1,0 +1,1 @@
+<p>    <strong>Search Highlighter (RexSearch)</strong><br />    Addon/Plugin erstellt von timo.huber basierend auf dem Addon    <a href="http://www.redaxo.de/180-0-addon-details.html?addon_id=587" target="_blank">RexSearch</a><br /></p>

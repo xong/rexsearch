@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS `%TABLE_PREFIX%587_stats_searchterms`;

@@ -1,0 +1,35 @@
+a587_stats_title = Statistics
+a587_stats_truncate = Attention! Deleting the statistics is irreversible.
+a587_stats_truncate_button = Delete statistics
+a587_stats_truncate_done = Statistics deleted
+a587_stats_truncate_confirm = Do you really want to truncate all data?
+
+a587_stats_generalstats_title = General data
+a587_stats_generalstats_005_datasetcount = Number of indexed datasets:
+a587_stats_generalstats_010_uniquedatasetcount = Number of unique datasets (e. g. articles are grouped):
+a587_stats_generalstats_020_averageresultcount = Average number of displayed resultsets:
+a587_stats_generalstats_030_searchescount = Number of searches:
+a587_stats_generalstats_040_successfullsearchescount = Number of successful searches:
+a587_stats_generalstats_050_failedsearchescount = Number of failed searches:
+a587_stats_generalstats_060_uniquesearchterms = Number of unique search terms:
+a587_stats_generalstats_070_keywordcount = Number of different keywords stored in the search index:
+a587_stats_generalstats_075_cachedsearchcount = Number of cached searches:
+a587_stats_generalstats_080_searchindexdatalength = Size of index of the index-table (587_searchindex):
+a587_stats_generalstats_090_searchindexindexlength = Size of data of the index-table (587_searchindex):
+a587_stats_generalstats_100_datalength = Size of the indexes of all rexsearch-tables:
+a587_stats_generalstats_110_indexlength = Size of the data of all rexsearch-tables:
+
+a587_stats_topsearchterms_title = The {0} top search terms ({1} different search terms total) <span class="rexsearch-stats-all">all</span> <span class="rexsearch-stats-success">successful</span> <span class="rexsearch-stats-fail">failed</span>
+a587_stats_topsearchterms_none = No search terms yet.
+
+a587_stats_general_title = General graphics
+a587_stats_rate_success_failure = Successful/failed Searches{0}({1} searches executed)
+a587_stats_rate_success_failure_lblsuccess = successful
+a587_stats_rate_success_failure_lblmiss = failed
+a587_stats_general_timestats = Search count for the {0} past months
+a587_stats_general_timestats_count = search count
+a587_stats_general_timestats_countcumu = cumulated count
+
+a587_stats_searchterm_timestats_title = Overview for {0} for the {1} past months
+a587_stats_searchterm_timestats_title0_single = "{0}"
+a587_stats_searchterm_timestats_title0_all = all search terms

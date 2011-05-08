@@ -1,0 +1,5 @@
+Änderungen von Stats (RexSearch)
+
+Version 0.2.1 (2010-12-19)
+  + Bug bei der Monatsberechnung beim Übergang von Januar zu Dezember
+    in der Klasse "RexSearchStats" behoben
