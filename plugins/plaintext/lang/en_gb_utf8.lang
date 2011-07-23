@@ -8,5 +8,7 @@ a587_rexsearch_plaintext_regex = Regular Expressions (row&#x2011;separated)
 a587_rexsearch_plaintext_regex_label = 1. Line: Regex<br />2. Line: Replacement<br /><a href="http://php.net/preg_replace">preg_replace()</a>
 a587_rexsearch_plaintext_striptags = Remove HTML-tags
 a587_rexsearch_plaintext_striptags_label = Executes the strip_tags()-function.
+a587_rexsearch_plaintext_textile = parse with textile
+a587_rexsearch_plaintext_textile_label = Executes the rex_a79_textile()-function.
 a587_rexsearch_plaintext_processparent = Execute default plaintext conversion
 a587_rexsearch_plaintext_processparent_label = Executes the default plaintext conversion additionally.

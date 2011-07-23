@@ -1,6 +1,6 @@
 <?php
 $basedir = dirname(__FILE__);
-
+error_reporting(E_ALL);
 require_once $basedir.'/phplot/phplot.php';
 
 // fetch data

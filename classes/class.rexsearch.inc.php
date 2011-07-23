@@ -7,7 +7,6 @@
  * 
  * @author    Robert Rupf
  * @package   rexsearch
- * @version   0.7.5
  */
  
 /**
@@ -209,111 +208,126 @@ class RexSearch
   
   
   /**
-	 * A function for retrieving the Kölner Phonetik value of a string
-	 *
-	 * As described at http://de.wikipedia.org/wiki/Kölner_Phonetik
-	 * Based on Hans Joachim Postel: Die Kölner Phonetik.
-	 * Ein Verfahren zur Identifizierung von Personennamen auf der
-	 * Grundlage der Gestaltanalyse.
-	 * in: IBM-Nachrichten, 19. Jahrgang, 1969, S. 925-931
-	 *
-	 * This program is distributed in the hope that it will be useful,
-	 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	 * GNU General Public License for more details.
-	 *
-	 * #package phonetics
-	 * @version 1.0
-	 * @link http://www.einfachmarke.de
-	 * @license GPL 3.0 <http://www.gnu.org/licenses/>
-	 * @copyright  2008 by einfachmarke.de
-	 * @author Nicolas Zimmer <nicolas dot zimmer at einfachmarke.de>
-	 */
-	function cologne_phone($_word)
-	{
-		/**
-		* @param  string  $_word string to be analyzed
-		* @return string  $value represents the Kölner Phonetik value
-		* @access public
-		*/
-		
-		//prepare for processing
-		$_word = str_replace(array('ä','ö','ü','ß','ph'),array('a','o','u','ss','f'),mb_strtolower($_word,rex_lang_is_utf8()?'UTF-8':mb_internal_encoding()));
-		
-		$len = strlen($_word);
-		
-		//Rule for exeptions
-		$exceptionsLeading = array(
-			4=>array('ca','ch','ck','cl','co','cq','cu','cx'),
-			8=>array('dc','ds','dz','tc','ts','tz')
-		);
-		
-		$exceptionsFollowing = array('sc','zc','cx','kx','qx');
-		
-		//Table for coding
-		$codingTable=array(
-			0=>array('a','e','i','j','o','u','y'),
-			1=>array('b','p'),
-			2=>array('d','t'),
-			3=>array('f','v','w'),
-			4=>array('c','g','k','q'),
-			48=>array('x'),
-			5=>array('l'),
-			6=>array('m','n'),
-			7=>array('r'),
-			8=>array('c','s','z'),
-		);
-		
-		for ($i=0;$i<$len;$i++)
-		{
-			$value[$i]='';
-			
-			//Exceptions
-			if($i==0 AND $_word[$i].$_word[$i+1]=='cr')
-				$value[$i]=4;
-			
-			foreach($exceptionsLeading as $code => $letters)
-			{
-				if (($i < $len-1) AND in_array($_word[$i].$_word[$i+1],$letters))
-					$value[$i]=$code;
-			}
-			
-			if($i!=0 AND (in_array($_word[$i-1].$_word[$i],$exceptionsFollowing)))
-				$value[$i]=8;       
-			
-			//Normal encoding
-			if($value[$i]=='')
-			{
-				foreach($codingTable as $code=>$letters)
-				{
-					if(in_array($_word[$i],$letters))
-						$value[$i]=$code;
-				}
-			}
-		}
-		
-		//delete double values
-		$len = count($value);
-		
-		for($i=1;$i<$len;$i++)
-		{
-			if($value[$i]==$value[$i-1])
-				$value[$i]='';
-		}
-		
-		//delete vocals
-		for($i=1;$i>$len;$i++)
-		{
-			//omitting first characer code and h
-			if($value[$i]==0)
-				$value[$i]='';
-		}
-		
-		$value = array_filter($value);
-		$value = implode('',$value);
-		
-		return $value;
-	}
+   * A function for retrieving the Kölner Phonetik value of a string
+   *
+   * As described at http://de.wikipedia.org/wiki/Kölner_Phonetik
+   * Based on Hans Joachim Postel: Die Kölner Phonetik.
+   * Ein Verfahren zur Identifizierung von Personennamen auf der
+   * Grundlage der Gestaltanalyse.
+   * in: IBM-Nachrichten, 19. Jahrgang, 1969, S. 925-931
+   *
+   * This program is distributed in the hope that it will be useful,
+   * but WITHOUT ANY WARRANTY; without even the implied warranty of
+   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   * GNU General Public License for more details.
+   *
+   * @package phonetics
+   * @version 1.0
+   * @link http://www.einfachmarke.de
+   * @license GPL 3.0 <http://www.gnu.org/licenses/>
+   * @copyright  2008 by einfachmarke.de
+   * @author Nicolas Zimmer <nicolas dot zimmer at einfachmarke.de>
+   */
+
+  function cologne_phone($_word)
+  {
+    /**
+    * @param  string  $_word string to be analyzed
+    * @return string  $value represents the Kölner Phonetik value
+    * @access public
+    */
+
+    //prepare for processing
+    $_word = strtolower($_word);
+    $substitution = array(
+      'ä'=>'a',
+      'ö'=>'o',
+      'ü'=>'u',
+      'ß'=>'ss',
+      'ph'=>'f'
+    );
+
+    foreach($substitution as $letter => $substitution)
+      $_word = str_replace($letter, $substitution, $_word);
+    
+    $len = strlen($_word);
+    
+    //Rule for exeptions
+    $exceptionsLeading = array(
+      4=>array('ca','ch','ck','cl','co','cq','cu','cx'),
+      8=>array('dc','ds','dz','tc','ts','tz')
+    );
+    
+    $exceptionsFollowing = array('sc','zc','cx','kx','qx');
+    
+    //Table for coding
+    $codingTable = array(
+      0 => array('a','e','i','j','o','u','y'),
+      1 => array('b','p'),
+      2 => array('d','t'),
+      3 => array('f','v','w'),
+      4 => array('c','g','k','q'),
+      48 => array('x'),
+      5 => array('l'),
+      6 => array('m','n'),
+      7 => array('r'),
+      8 => array('c','s','z')
+    );
+    
+    for($i=0; $i < $len; $i++)
+    {
+      $value[$i] = '';
+      
+        //Exceptions
+      if($i==0 AND $len > 1 AND $_word[$i].$_word[$i+1] == 'cr')
+        $value[$i] = 4;
+      
+      if($i < ($len - 1))
+      {
+        foreach($exceptionsLeading as $code=>$letters)
+        {
+          if(in_array($_word[$i].$_word[$i+1],$letters))
+            $value[$i] = $code;
+        }
+      }
+      
+      if($i AND in_array($_word[$i-1].$_word[$i], $exceptionsFollowing))
+        $value[$i] = 8;
+      
+      //Normal encoding
+      if($value[$i] == '')
+      {
+        foreach($codingTable as $code => $letters)
+        {
+          if(in_array($_word[$i], $letters))
+            $value[$i] = $code;
+        }
+      }
+    }
+
+    //delete double values
+    $len=count($value);
+
+    for($i=1;$i<$len;$i++)
+    {
+      if($value[$i] == $value[$i-1])
+        $value[$i] = '';
+    }
+
+    //delete vocals
+    for ($i=1;$i>$len;$i++)
+    {
+      //omitting first characer code and h
+      if($value[$i] == 0)
+        $value[$i] = '';
+    }
+
+
+    $value = array_filter($value);
+    $value = implode('', $value);
+
+    return $value;
+  }
   
   
   function doSearchArticles($_bool = false)
@@ -638,6 +652,21 @@ class RexSearch
         $articleData['unchangedtext'] = $insert->escape($articleText);
         $articleData['plaintext'] = $insert->escape($plaintext = $this->getPlaintext($articleText));
         
+        if(array_key_exists($REX['TABLE_PREFIX'].'article', $this->includeColumns))
+        {
+          $additionalValues = array();
+          $select->flush();
+          $select->setTable($REX['TABLE_PREFIX'].'article');
+          $select->setWhere('id = '.$_id.' AND clang = '.$langID);
+          $select->select('`'.implode('`,`', $this->includeColumns[$REX['TABLE_PREFIX'].'article']).'`');
+          foreach($this->includeColumns[$REX['TABLE_PREFIX'].'article'] as $col)
+          {
+            $additionalValues[$col] = $select->getValue($col);
+          }
+          
+          $articleData['values'] = $insert->escape(serialize($additionalValues));
+        }
+        
         foreach(preg_split($this->encodeRegex('~[[:punct:][:space:]]+~ism'), $plaintext) as $keyword)
         {
           if($this->significantCharacterCount <= mb_strlen($keyword,$this->utf8?'UTF-8':mb_internal_encoding()))
@@ -916,7 +945,7 @@ class RexSearch
             if($return == 2)
               $error = A587_FILE_XPDFERR_OPENDEST;
             if($return == 3)
-              $error = A587_FILE_XPDFERR_PDFPERM;
+              $error = A587_FILE_XPDFERR_PERM;
             if($return == 99)
               $error = A587_FILE_XPDFERR_OTHER;
           }
@@ -1639,36 +1668,44 @@ class RexSearch
         foreach($this->searchArray as $keyword)
           $replace[] = $this->encodeRegex('~'.preg_quote($keyword['search'],'~').'~is');
         
+        $strlen = mb_strlen($_text);
+        $positions = array();
         for($i = 0; $i < count($this->searchArray); $i++)
         {
           $hits = array();
-          preg_match_all($this->encodeRegex('~(.{0,'.$this->maxHighlightedTextChars.'})'.preg_quote($this->searchArray[$i]['search'],'~').'(.{0,'.$this->maxHighlightedTextChars.'})~ims'), $_text, $hits, PREG_SET_ORDER);
+          $offset = 0;
+          preg_match_all($this->encodeRegex('~((.{0,'.$this->maxHighlightedTextChars.'})'.preg_quote($this->searchArray[$i]['search'],'~').'(.{0,'.$this->maxHighlightedTextChars.'}))~ims'), $_text, $hits, PREG_SET_ORDER);
           
           foreach($hits as $hit)
           {
+            $offset = strpos($_text, $hit[0], $offset);
+            $currentposition = intval(($offset) / (2 * $this->maxHighlightedTextChars));
+            
             if($this->highlightType == 'array' AND !array_key_exists($this->searchArray[$i]['search'], $Ahighlighted))
               $Ahighlighted[$this->searchArray[$i]['search']] = array();
             
-            if(trim($hit[0]) != '')
+            if(trim($hit[1]) != '')
             {
-              $surroundText = $hit[0];
-              
-              if(strlen($hit[1]) > 0 AND false !== strpos($hit[1], ' '))
-                $surroundText = substr($surroundText, strpos($surroundText, ' '));
+              $surroundText = $hit[1];
               
               if(strlen($hit[2]) > 0 AND false !== strpos($hit[2], ' '))
+                $surroundText = substr($surroundText, strpos($surroundText, ' '));
+              
+              if(strlen($hit[3]) > 0 AND false !== strpos($hit[3], ' '))
                 $surroundText = substr($surroundText, 0, strrpos($surroundText,' '));
               
-              if($i == 0 AND strlen($hit[1]) > 0)
+              if($i == 0 AND strlen($hit[2]) > 0)
                 $startEllipsis = true;
               
-              if($i == (count($this->searchArray) - 1) AND strlen($hit[2]) > 0)
+              if($i == (count($this->searchArray) - 1) AND strlen($hit[3]) > 0)
                 $endEllipsis = true;
               
               if($this->highlightType == 'array')
                 $Ahighlighted[$this->searchArray[$i]['search']][] = preg_replace($replace, $this->surroundTags[0].'$0'.$this->surroundTags[1], trim($surroundText));
-              else
+              else if(!in_array($currentposition, $positions))
                 $Ahighlighted[] = trim($surroundText);
+              
+              $positions[] = $currentposition;
               
               if($this->highlightType == 'surroundtextsingle')
                 break;

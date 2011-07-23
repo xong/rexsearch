@@ -26,9 +26,10 @@ if(is_object($REX['USER']) AND ($REX['USER']->hasPerm($parent.'['.$mypage.']') O
   if(!file_exists($settingFile = dirname(__FILE__).'/settings.conf'))
   {
     a587_plaintext_saveSettings(array(
-      'order' => 'selectors,regex,striptags',
+      'order' => 'selectors,regex,textile,striptags',
       'selectors' => "head,\nscript",
       'regex' => '',
+      'textile' => true,
       'striptags' => true,
       'processparent' => false
     ));

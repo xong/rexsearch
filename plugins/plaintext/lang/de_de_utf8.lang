@@ -8,5 +8,7 @@ a587_rexsearch_plaintext_regex = Reguläre Ausdrücke (zeilenweise getrennt)
 a587_rexsearch_plaintext_regex_label = 1. Zeile: Regex<br />2. Zeile: Ersetzung<br /><a href="http://php.net/preg_replace">preg_replace()</a>
 a587_rexsearch_plaintext_striptags = HTML-Tags entfernen
 a587_rexsearch_plaintext_striptags_label = Wendet die Funktion strip_tags() auf den Plaintext an.
+a587_rexsearch_plaintext_textile = Textile parsen
+a587_rexsearch_plaintext_textile_label = Führt die Funktion rex_a79_textile() aus.
 a587_rexsearch_plaintext_processparent = Standard-Plaintext-Konvertierung durchführen
 a587_rexsearch_plaintext_processparent_label = Führt die Plaintext-Konvertierung von RexSearch zusätzlich aus.

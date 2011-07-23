@@ -1,6 +1,12 @@
 <?php
 switch($ajax)
 {
+  case 'deleteindex':
+    $delete = new rexsearch();
+    $delete->deleteIndex();
+    echo 1;
+  break;
+  
   case 'generate':
     // index column or article
     $rexsearch = new rexsearch();
@@ -66,7 +72,7 @@ switch($ajax)
             echo '<p style="color:#a55">XPDF-error: Error opening an output file. File'.$additionalOutput.': <strong>"'.htmlspecialchars($_GET['name']).'"</strong>.</p>';
           break;
   
-          case A587_FILE_XPDFERR_PDFPERM:
+          case A587_FILE_XPDFERR_PERM:
             echo '<p style="color:#a55">XPDF-error: Error related to PDF permissions. File'.$additionalOutput.': <strong>"'.htmlspecialchars($_GET['name']).'"</strong>.</p>';
           break;
   

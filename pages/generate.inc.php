@@ -30,8 +30,6 @@ function a587_getArticleIds($cats = false)
 
 if(!empty($_GET['do']) AND $_GET['do'] == 'incremental')
 {
-  $delete = new rexsearch();
-  $delete->deleteIndex();
   echo '<div class="rex-message" style="display:none;" id="rexsearch_generate_cancel"><div class="rex-warning"><p><span>'.$I18N->Msg('a587_settings_generate_cancel').'</span></p></div></div>';
   echo '<div class="rex-message" style="display:none;" id="rexsearch_generate_done"><div class="rex-info"><p><span>'.$I18N->Msg('a587_settings_generate_done').'</span></p></div></div>';
   echo '<div class="rex-message" id="rexsearch_generate_inprogress"><div class="rex-warning" style="background-image:url(../files/addons/rexsearch/loading.gif)"><p><span>'.$I18N->Msg('a587_settings_generate_inprogress').'</span></p></div></div>';
@@ -178,13 +176,24 @@ if($globalcount > 0)
 {
 ?>
 if(confirm('<?php echo $I18N->Msg('a587_settings_generate_incremental_confirm'); ?>'))
+{
+  var del = new Image();
+  del.src = 'index.php?page=rexsearch&ajax=deleteindex';
+  
   index(indexArray[0][0], indexArray[0][1]);
+}
 else
 {
   jQuery('#rexsearch_generate_inprogress').hide();
   jQuery('#rexsearch_generate_cancel').show();
 }
 <?php
+}
+else
+{
+?>
+jQuery('#rexsearch_generate_inprogress').hide();
+jQuery('#rexsearch_generate_done').show();<?php
 }
 ?>
 jQuery('#rexsearch_generate_header').after(
@@ -227,6 +236,8 @@ else
   }
 
   $content = '
+<div class="rex-area">
+<div class="rex-area-content">
 <p class="rex-tx1">'.$I18N->Msg('a587_settings_generate_full_text').'</p>
 <p class="rex-button"><a href="index.php?page=rexsearch&amp;subpage=generate&amp;do=full" class="rex-button"><span>'.$I18N->Msg('a587_settings_generate_full').'</span></a></p>
 
@@ -240,5 +251,9 @@ else
 <p class="rex-button"><a onclick="return confirm(\''.$I18N->Msg('a587_settings_generate_delete_keywords_confirm').'\');" href="index.php?page=rexsearch&amp;subpage=generate&amp;do=deletekeywords" class="rex-button"><span>'.$I18N->Msg('a587_settings_generate_delete_keywords').'</span></a></p>';
   
   echo rex_register_extension_point('A587_PAGE_MAINTENANCE', $content);
+  
+  echo '
+</div>
+</div>';
 }
 ?>

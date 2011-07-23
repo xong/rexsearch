@@ -10,7 +10,7 @@ $REX['ADDON']['perm'][$mypage] = $mypage.'[]';
 $REX['PERM'][] = $mypage.'[]';
 $REX['EXTPERM'][] = $mypage.'[settings]';
 
-$REX['ADDON']['version'][$mypage] = '0.7.5';
+$REX['ADDON']['version'][$mypage] = '0.7.8';
 $REX['ADDON']['author'][$mypage] = 'Robert Rupf';
 $REX['ADDON']['dir'][$mypage] = dirname(__FILE__);
 
@@ -81,7 +81,7 @@ if(!file_exists($settingFile = dirname(__FILE__).'/settings.conf'))
 $REX['ADDON']['settings'][$mypage] = a587_config_unserialize(rex_get_file_contents($settingFile));
 
 // automatic indexing
-if($REX['ADDON']['settings'][$mypage]['automaticindex'] == '1')
+if($REX['REDAXO'] AND $REX['ADDON']['settings'][$mypage]['automaticindex'] == '1')
 {
   $extensionPoints = array(
     'ART_DELETED',

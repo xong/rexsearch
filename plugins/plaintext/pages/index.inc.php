@@ -46,7 +46,7 @@ echo a587_getSettingsFormSection(
   )
 );
 
-$form_elements = array(
+/*$form_elements = array(
   array(
     'type' => 'directoutput',
     'output' => '<div class="rex-form-row"><div class="rex-area-content"><p class="rex-tx1">'.$I18N->Msg('a587_rexsearch_plaintext_description').'</p></div></div>'
@@ -60,7 +60,7 @@ $form_elements = array(
     'type' => 'directoutput',
     'output' => '<div id="sortable-elements">'
   )
-);
+);*/
 
 echo '<div id="sortable-elements">';
 
@@ -109,6 +109,23 @@ foreach(explode(',', $REX['ADDON']['rexsearch_plugins'][$parent][$mypage]['setti
             'name' => 'a587_rexsearch_plaintext[regex]',
             'label' => $I18N->Msg('a587_rexsearch_plaintext_regex_label'),
             'value' => isset($REX['ADDON']['rexsearch_plugins'][$parent][$mypage]['settings']['regex']) ? htmlspecialchars($REX['ADDON']['rexsearch_plugins'][$parent][$mypage]['settings']['regex']) : ''
+          )
+        )
+      );
+    break;
+    
+    case 'textile':
+      echo a587_getSettingsFormSection(
+        'a587_rexsearch_plaintext_textile_fieldset',
+        $I18N->Msg('a587_rexsearch_plaintext_textile'),
+        array(
+          array(
+            'type' => 'checkbox',
+            'id' => 'a587_rexsearch_plaintext_textile',
+            'name' => 'a587_rexsearch_plaintext[textile]',
+            'label' => $I18N->Msg('a587_rexsearch_plaintext_textile_label'),
+            'value' => '1',
+            'checked' => !empty($REX['ADDON']['rexsearch_plugins'][$parent][$mypage]['settings']['textile'])
           )
         )
       );
@@ -209,7 +226,7 @@ jQuery('#sortable-elements').sortable({
   }
 });
 
-jQuery('#a587_rexsearch_plaintext_selectors_fieldset legend,#a587_rexsearch_plaintext_regex_fieldset legend,#a587_rexsearch_plaintext_striptags_fieldset legend').each(function()
+jQuery('#a587_rexsearch_plaintext_selectors_fieldset legend,#a587_rexsearch_plaintext_regex_fieldset legend,#a587_rexsearch_plaintext_textile_fieldset legend,#a587_rexsearch_plaintext_striptags_fieldset legend').each(function()
 {
   var text = jQuery(this).html();
   jQuery(this).css('cursor', 'move').html('')

@@ -65,3 +65,21 @@ Version 0.7.5 (2011-03-30)
   + Sprachabhängigkeit bei der Ähnlichkeitssuche berücksichtigt
   + Indexierung der Keywords verbessert
   + Plugin "Search Highlighter"
+
+Version 0.7.6 (2011-06-01)
+  + Methode cologne_phone() von Fehlern behoben (z. B. ungültige Arrayindexzugriffe)
+  + XSS-Bug im Stats-Plugin beheben
+  + Löschen des Suchindex bei der schrittweisen Indexierung erst nach dem OK-Klick
+  + Meldung, wenn bei der schrittweisen Indexierung keine Datensätze indexiert werden können/müssen (http://www.redaxo.org/de/forum/post92638.html#p92638)
+  + jedes Vorkommen der Konstante A587_FILE_XPDFERR_PDFPERM zu A587_FILE_XPDFERR_PERM geändert
+
+Version 0.7.7 (2011-06-08)
+  + Bug bei der automatischen Indexierung behoben
+
+Version 0.7.8 (2011-06-29)
+  + Plaintext-Plugin um die Möglichkeit erweitert, mit Textile zu parsen
+
+Version 0.7.9 (2011)
+  + Speicherung von indexierten Spalten bei der Indexierung von Artikeln
+  + Verbesserung der getHighlightedText-Methode: Textpassagen kommen nicht mehr
+    doppelt vor
