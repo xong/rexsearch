@@ -1678,8 +1678,8 @@ class RexSearch
           
           foreach($hits as $hit)
           {
-            $offset = strpos($_text, $hit[0], $offset);
-            $currentposition = intval(($offset) / (2 * $this->maxHighlightedTextChars));
+            $offset = strpos($_text, $hit[0], $offset) + 1;
+            $currentposition = ceil(intval(($offset - 1) / (2 * $this->maxHighlightedTextChars)));
             
             if($this->highlightType == 'array' AND !array_key_exists($this->searchArray[$i]['search'], $Ahighlighted))
               $Ahighlighted[$this->searchArray[$i]['search']] = array();
