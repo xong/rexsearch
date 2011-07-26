@@ -60,7 +60,7 @@ function a587_getPlaintext($_text,$_remove)
       
       case 'textile':
         // strip HTML-tags
-        if(!empty($REX['ADDON']['rexsearch_plugins']['rexsearch']['plaintext']['settings']['textile']))
+        if(!empty($REX['ADDON']['rexsearch_plugins']['rexsearch']['plaintext']['settings']['textile']) AND function_exists('rex_a79_textile'))
           $_text = rex_a79_textile($_text);
       break;
       
