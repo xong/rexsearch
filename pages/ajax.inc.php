@@ -35,8 +35,8 @@ switch($ajax)
       break;
       
       case 'col':
-        if(false !== ($count = $rexsearch->indexColumn($_GET['t'], $_GET['c'])))
-          echo '<p style="color:#5a5">Done: <em>`'.$_GET['t'].'`.`'.$_GET['c'].'`</em> (<strong>'.$count.'</strong> row(s) indexed)</p>';
+        if(false !== ($count = $xsearch->indexColumn($_GET['t'], $_GET['c'], false, false, $_GET['s'], $_GET['w'])))
+          echo '<p style="color:#5a5">Done: <em>`'.$_GET['t'].'`.`'.$_GET['c'].'` ('.$_GET['s'].' - '.($_GET['s'] + $_GET['w']).')</em> (<strong>'.$count.'</strong> row(s) indexed)</p>';
         else
           echo '<p style="color:#a55">Error: <em>`'.$_GET['t'].'`.`'.$_GET['c'].'`</em> not found</p>';
       break;
