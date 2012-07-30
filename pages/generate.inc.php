@@ -48,11 +48,19 @@ if(!empty($_GET['do']) AND $_GET['do'] == 'incremental')
   {
     foreach($REX['ADDON']['settings']['rexsearch']['include'] as $table => $columnArray)
     {
-      foreach($columnArray as $column)
+      $sql = new rex_sql();
+      $sql->setQuery("SELECT COUNT(*) AS count FROM `".$sql->escape($table)."`");
+      $count = intval($sql->getValue('count'));
+      $step_width = 100;
+      
+      for($i = 0; $i < $count; $i += $step_width)
       {
-        #$js_output .= 'index("col",new Array("'.$table.'","'.$column.'"));';
-        $js_output .= 'indexArray.push(new Array("col",new Array("'.$table.'","'.$column.'")));';
-        $globalcount++;
+        foreach($columnArray as $column)
+        {
+          #$js_output .= 'index("col",new Array("'.$table.'","'.$column.'"));';
+          $js_output .= 'indexArray.push(new Array("col",new Array("'.$table.'","'.$column.'",'.$i.','.$step_width.')));';
+          $globalcount++;
+        }
       }
     }
   }
@@ -127,7 +135,7 @@ function index(type,data)
   if(type == 'art')
     url = 'index.php?page=rexsearch&ajax=generate&do=incremental&type=art&id='+data;
   else if(type == 'col')
-    url = 'index.php?page=rexsearch&ajax=generate&do=incremental&type=col&t='+data[0]+'&c='+data[1];
+    url = 'index.php?page=xsearch&ajax=generate&do=incremental&type=col&t='+data[0]+'&c='+data[1]+'&s='+data[2]+'&w='+data[3];
   else if(type == 'file')
     url = 'index.php?page=rexsearch&ajax=generate&do=incremental&type=file&name='+data;
   else if(type == 'mediapool')
