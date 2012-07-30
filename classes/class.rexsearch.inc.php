@@ -208,10 +208,10 @@ class RexSearch
   
   
   /**
-   * A function for retrieving the Kölner Phonetik value of a string
+   * A function for retrieving the K?lner Phonetik value of a string
    *
-   * As described at http://de.wikipedia.org/wiki/Kölner_Phonetik
-   * Based on Hans Joachim Postel: Die Kölner Phonetik.
+   * As described at http://de.wikipedia.org/wiki/K?lner_Phonetik
+   * Based on Hans Joachim Postel: Die K?lner Phonetik.
    * Ein Verfahren zur Identifizierung von Personennamen auf der
    * Grundlage der Gestaltanalyse.
    * in: IBM-Nachrichten, 19. Jahrgang, 1969, S. 925-931
@@ -233,17 +233,17 @@ class RexSearch
   {
     /**
     * @param  string  $_word string to be analyzed
-    * @return string  $value represents the Kölner Phonetik value
+    * @return string  $value represents the K?lner Phonetik value
     * @access public
     */
 
     //prepare for processing
     $_word = strtolower($_word);
     $substitution = array(
-      'ä'=>'a',
-      'ö'=>'o',
-      'ü'=>'u',
-      'ß'=>'ss',
+      '?'=>'a',
+      '?'=>'o',
+      '?'=>'u',
+      '?'=>'ss',
       'ph'=>'f'
     );
 
@@ -699,10 +699,12 @@ class RexSearch
     * @param mixed $_column
     * @param mixed $_idcol
     * @param mixed $_id
+    * @param mixed $_start
+    * @param mixed $_count
     * 
     * @return mixed
     */
-  function indexColumn($_table, $_column, $_idcol = false, $_id = false)
+  function indexColumn($_table, $_column, $_idcol = false, $_id = false, $_start = false, $_count = false)
   {
     $delete = new rex_sql();
     
@@ -737,10 +739,14 @@ class RexSearch
     // index column
     $sql->flush();
     $sql->setTable($_table);
-    
+    $where = '1 ';
     if(is_string($_idcol) AND $_id)
-      $sql->setWhere(sprintf('%s = %d', $_idcol, $_id));
+      $where .= sprintf(' AND %s = %d', $_idcol, $_id);
     
+    if(is_numeric($_start) AND is_numeric($_count))
+      $where .= ' LIMIT '.$_start.','.$_count;
+    
+    $sql->setWhere($where);
     $count = false;
     if($sql->select('*'))
     {
