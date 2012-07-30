@@ -135,7 +135,7 @@ function index(type,data)
   if(type == 'art')
     url = 'index.php?page=rexsearch&ajax=generate&do=incremental&type=art&id='+data;
   else if(type == 'col')
-    url = 'index.php?page=xsearch&ajax=generate&do=incremental&type=col&t='+data[0]+'&c='+data[1]+'&s='+data[2]+'&w='+data[3];
+    url = 'index.php?page=rexsearch&ajax=generate&do=incremental&type=col&t='+data[0]+'&c='+data[1]+'&s='+data[2]+'&w='+data[3];
   else if(type == 'file')
     url = 'index.php?page=rexsearch&ajax=generate&do=incremental&type=file&name='+data;
   else if(type == 'mediapool')
