@@ -758,7 +758,7 @@ class RexSearch
       
       foreach($sql->getArray() as $value)
       {
-        if(!empty($value[$_column]) AND (!array_key_exists('status',$value) OR $value['status'] == '1') AND ($this->tablePrefix.'article' != $_table OR !in_array($value['id'],$this->excludeIDs)))
+        if(!empty($value[$_column]) AND ($this->indexOffline OR $this->tablePrefix.'article' != $_table OR $value['status'] == '1') AND ($this->tablePrefix.'article' != $_table OR !in_array($value['id'],$this->excludeIDs)))
         {
           $insert = new rex_sql();
           $indexData = array();
