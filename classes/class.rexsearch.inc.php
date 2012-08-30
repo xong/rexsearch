@@ -725,9 +725,12 @@ class RexSearch
     }
     
     // delete old data
-    $delete->setTable($this->tablePrefix.'587_searchindex');
-    $delete->setWhere($where);
-    $delete->delete();
+    if($_start === 0)
+    {
+      $delete->setTable($this->tablePrefix.'587_searchindex');
+      $delete->setWhere($where);
+      $delete->delete();
+    }
     
     $sql = new rex_sql();
     
