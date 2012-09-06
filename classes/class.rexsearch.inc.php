@@ -746,7 +746,7 @@ class RexSearch
     if(is_string($_idcol) AND $_id)
       $where .= sprintf(' AND (%s = %d)', $_idcol, $_id);
     
-    if(!empty($_where) AND strlen($_where))
+    if(!empty($_where) AND is_string($_where))
       $where .= ' AND ('.$_where.')';
     
     if(is_numeric($_start) AND is_numeric($_count))
