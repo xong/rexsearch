@@ -704,13 +704,13 @@ class RexSearch
     * 
     * @return mixed
     */
-  function indexColumn($_table, $_column, $_idcol = false, $_id = false, $_start = false, $_count = false)
+  function indexColumn($_table, $_column, $_idcol = false, $_id = false, $_start = false, $_count = false, $_where = false)
   {
     $delete = new rex_sql();
     
     $where = sprintf(" `ftable` = '%s' AND `fcolumn` = '%s' AND `texttype` = 'db_column'",$delete->escape($_table),$delete->escape($_column));
-    if(is_string($_idcol) AND ($_id !== false))
-      $where .= sprintf(' AND fid = %d',$_id);
+    //if(is_string($_idcol) AND ($_id !== false))
+      //$where .= sprintf(' AND fid = %d',$_id);
     
     // delete from cache
     $select = new rex_sql();
@@ -744,7 +744,10 @@ class RexSearch
     $sql->setTable($_table);
     $where = '1 ';
     if(is_string($_idcol) AND $_id)
-      $where .= sprintf(' AND %s = %d', $_idcol, $_id);
+      $where .= sprintf(' AND (%s = %d)', $_idcol, $_id);
+    
+    if(!empty($_where) AND strlen($_where))
+      $where .= ' AND ('.$_where.')';
     
     if(is_numeric($_start) AND is_numeric($_count))
       $where .= ' LIMIT '.$_start.','.$_count;
