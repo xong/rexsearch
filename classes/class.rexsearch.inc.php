@@ -56,7 +56,6 @@ class RexSearch
   var $groupBy = true;
   var $hashMe = '';
   var $highlightType = 'surroundtext';
-  var $htdocsPath;
   var $includeColumns = array();
   var $includeDirectories = array();
   var $includePath;
@@ -181,7 +180,6 @@ class RexSearch
     $this->languages = $REX['CLANG'];
     $this->tablePrefix = $REX['TABLE_PREFIX'];
     $this->includePath = $REX['INCLUDE_PATH'];
-    $this->htdocsPath = realpath($REX['INCLUDE_PATH'].'../../../');
     $this->utf8 = rex_lang_is_utf8();
     $this->documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
     $this->mediaFolder = $REX['MEDIAFOLDER'];
@@ -942,7 +940,7 @@ class RexSearch
         
         if(function_exists('exec'))
         {
-          $tempFile = tempnam($this->htdocsPath.'/files/', 'rexsearch');
+          $tempFile = tempnam($this->includePath.'/generated/files/', 'rexsearch');
           
           if($this->utf8)
             $encoding = 'UTF-8';
