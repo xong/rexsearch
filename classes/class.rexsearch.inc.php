@@ -2288,19 +2288,29 @@ class RexSearch
       $simwords = array();
       foreach($this->searchArray as $keyword)
       {
+        $sounds = array();
+        if($this->similarwordsMode & A587_SIMILARWORDS_SOUNDEX)
+          $sounds[] = "soundex = '".soundex($keyword['search'])."'";
+        
+        if($this->similarwordsMode & A587_SIMILARWORDS_METAPHONE)
+          $sounds[] = "metaphone = '".metaphone($keyword['search'])."'";
+        
+        if($this->similarwordsMode & A587_SIMILARWORDS_COLOGNEPHONE)
+          $sounds[] = "colognephone = '".$this->cologne_phone($keyword['search'])."'";
+        
         $simwords[] = sprintf("
           SELECT
-            keyword, '%s' AS typedin, SUM(count) as count
+            GROUP_CONCAT(DISTINCT keyword SEPARATOR ' ') as keyword,
+            '%s' AS typedin,
+            SUM(count) as count
           FROM `%s`
-          WHERE
+          WHERE 1
             %s
-            soundex = '%s' OR metaphone = '%s' OR colognephone = '%s'",
+            AND (%s)",
           $keyword['search'],
           $this->tablePrefix.'587_keywords',
-          ($this->clang !== false) ? '(clang = '.intval($this->clang).' OR clang IS NULL) AND ' : '',
-          ($this->similarwordsMode & A587_SIMILARWORDS_SOUNDEX)?soundex($keyword['search']):'',
-          ($this->similarwordsMode & A587_SIMILARWORDS_METAPHONE)?metaphone($keyword['search']):'',
-          ($this->similarwordsMode & A587_SIMILARWORDS_COLOGNEPHONE)?$this->cologne_phone($keyword['search']):''
+          ($this->clang !== false) ? 'AND (clang = '.intval($this->clang).' OR clang IS NULL)' : '',
+          implode(' OR ', $sounds)
         );
       }
       
