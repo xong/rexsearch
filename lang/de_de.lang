@@ -49,6 +49,7 @@ a587_settings_similarwords_soundex = Soundex
 a587_settings_similarwords_metaphone = Metaphone
 a587_settings_similarwords_cologne = Kölner Phonetik
 a587_settings_similarwords_all = Alle
+a587_settings_similarwords_permanent = Die Ähnlichkeitssuche auch dann durchführen, wenn Ergebnisse vorhanden sind.
 
 a587_settings_exclude = Wörter, Kategorien und Artikel von der Suche ausschließen
 a587_settings_exclude_blacklist = Wörter (kommasepariert)

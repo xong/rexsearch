@@ -49,6 +49,7 @@ a587_settings_similarwords_soundex = Soundex
 a587_settings_similarwords_metaphone = Metaphone
 a587_settings_similarwords_cologne = Kölner Phonetik
 a587_settings_similarwords_all = All
+a587_settings_similarwords_permanent = Perform fuzzy search even if results are found.
 
 a587_settings_exclude = Exclude words, Categories and Articles from the search
 a587_settings_exclude_blacklist = Words (comma-separated)

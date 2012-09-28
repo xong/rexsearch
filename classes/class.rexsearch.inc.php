@@ -81,6 +81,7 @@ class RexSearch
   var $significantCharacterCount = 3;
   var $similarwords = false;
   var $similarwordsMode = 0;
+  var $similarwordsPermanent = false;
   var $stopwords = array();
   var $surroundTags = array('<strong>','</strong>');
   var $tablePrefix;
@@ -159,6 +160,9 @@ class RexSearch
           case 'similarwordsmode':
             $this->similarwordsMode = intval($value);
             $this->similarwords = !!intval($value);
+          break;
+          case 'similarwords_permanent':
+            $this->similarwordsPermanent = !!intval($value);
           break;
           case 'fileextensions':
             $this->fileExtensions = $value;
@@ -2011,6 +2015,81 @@ class RexSearch
       return $this->cachedArray;
     }
     
+    $return['simwordsnewsearch'] = '';
+    $return['simwords'] = array();
+    if($this->similarwords)
+    {
+      $simwords = array();
+      foreach($this->searchArray as $keyword)
+      {
+        $sounds = array();
+        if($this->similarwordsMode & A587_SIMILARWORDS_SOUNDEX)
+          $sounds[] = "soundex = '".soundex($keyword['search'])."'";
+        
+        if($this->similarwordsMode & A587_SIMILARWORDS_METAPHONE)
+          $sounds[] = "metaphone = '".metaphone($keyword['search'])."'";
+        
+        if($this->similarwordsMode & A587_SIMILARWORDS_COLOGNEPHONE)
+          $sounds[] = "colognephone = '".$this->cologne_phone($keyword['search'])."'";
+        
+        $simwords[] = sprintf("
+          SELECT
+            GROUP_CONCAT(DISTINCT keyword SEPARATOR ' ') as keyword,
+            '%s' AS typedin,
+            SUM(count) as count
+          FROM `%s`
+          WHERE 1
+            %s
+            AND (%s)",
+          $keyword['search'],
+          $this->tablePrefix.'587_keywords',
+          ($this->clang !== false) ? 'AND (clang = '.intval($this->clang).' OR clang IS NULL)' : '',
+          implode(' OR ', $sounds)
+        );
+      }
+      
+      // simwords
+      $simWordsSQL = new rex_sql();
+      foreach($simWordsSQL->getArray(sprintf("
+        %s
+        GROUP BY %s
+        ORDER BY SUM(count)",
+        implode(' UNION ', $simwords),
+        $this->similarwordsPermanent ? "''" : 'keyword, typedin'
+        )
+      ) as $simword)
+      {
+        $return['simwords'][$simword['typedin']] = array(
+          'keyword' => $simword['keyword'],
+          'typedin' => $simword['typedin'],
+          'count' => $simword['count'],
+        );
+      }
+      
+      $newsearch = array();
+      foreach($this->searchArray as $keyword)
+      {
+        if(preg_match($this->encodeRegex('~\s~is'), $keyword['search']))
+          $quotes = '"';
+        else
+          $quotes = '';
+        
+        if(array_key_exists($keyword['search'], $return['simwords']))
+        {
+          $newsearch[] = $quotes.$return['simwords'][$keyword['search']]['keyword'].$quotes;
+        }
+        else
+        {
+          $newsearch[] = $quotes.$keyword['search'].$quotes;
+        }
+      }
+      
+      $return['simwordsnewsearch'] = implode(' ', $newsearch);
+    }
+    
+    if($this->similarwordsPermanent)
+      $keywordCount = $this->parseSearchString($return['simwordsnewsearch']);
+    
     $searchColumns = array();
     switch($this->textMode)
     {
@@ -2279,77 +2358,6 @@ class RexSearch
     if($this->similarwords AND $i)
     {
       $this->storeKeywords($this->searchArray);
-    }
-    
-    $return['simwordsnewsearch'] = '';
-    $return['simwords'] = array();
-    if($this->similarwords AND !$i)
-    {
-      $simwords = array();
-      foreach($this->searchArray as $keyword)
-      {
-        $sounds = array();
-        if($this->similarwordsMode & A587_SIMILARWORDS_SOUNDEX)
-          $sounds[] = "soundex = '".soundex($keyword['search'])."'";
-        
-        if($this->similarwordsMode & A587_SIMILARWORDS_METAPHONE)
-          $sounds[] = "metaphone = '".metaphone($keyword['search'])."'";
-        
-        if($this->similarwordsMode & A587_SIMILARWORDS_COLOGNEPHONE)
-          $sounds[] = "colognephone = '".$this->cologne_phone($keyword['search'])."'";
-        
-        $simwords[] = sprintf("
-          SELECT
-            GROUP_CONCAT(DISTINCT keyword SEPARATOR ' ') as keyword,
-            '%s' AS typedin,
-            SUM(count) as count
-          FROM `%s`
-          WHERE 1
-            %s
-            AND (%s)",
-          $keyword['search'],
-          $this->tablePrefix.'587_keywords',
-          ($this->clang !== false) ? 'AND (clang = '.intval($this->clang).' OR clang IS NULL)' : '',
-          implode(' OR ', $sounds)
-        );
-      }
-      
-      // simwords
-      $simWordsSQL = new rex_sql();
-      foreach($simWordsSQL->getArray(sprintf("
-        %s
-        GROUP BY keyword, typedin
-        ORDER BY SUM(count)",
-        implode(' UNION ', $simwords)
-        )
-      ) as $simword)
-      {
-        $return['simwords'][$simword['typedin']] = array(
-          'keyword' => $simword['keyword'],
-          'typedin' => $simword['typedin'],
-          'count' => $simword['count'],
-        );
-      }
-      
-      $newsearch = array();
-      foreach($this->searchArray as $keyword)
-      {
-        if(preg_match($this->encodeRegex('~\s~is'), $keyword['search']))
-          $quotes = '"';
-        else
-          $quotes = '';
-        
-        if(array_key_exists($keyword['search'], $return['simwords']))
-        {
-          $newsearch[] = $quotes.$return['simwords'][$keyword['search']]['keyword'].$quotes;
-        }
-        else
-        {
-          $newsearch[] = $quotes.$keyword['search'].$quotes;
-        }
-      }
-      
-      $return['simwordsnewsearch'] = implode(' ', $newsearch);
     }
     
     if($this->cache)

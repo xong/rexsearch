@@ -159,6 +159,14 @@ echo a587_getSettingsFormSection(
       )
     ),
     array(
+      'type' => 'checkbox',
+      'id' => 'a587_rexsearch_similarwords_permanent',
+      'name' => 'a587_rexsearch[similarwords_permanent]',
+      'label' => $I18N->Msg('a587_settings_similarwords_permanent'),
+      'value' => '1',
+      'checked' => !empty($REX['ADDON']['settings']['rexsearch']['similarwords_permanent'])
+    ),
+    array(
       'type' => 'select',
       'id' => 'a587_rexsearch_searchmode',
       'name' => 'a587_rexsearch[searchmode]',
