@@ -569,6 +569,8 @@ class RexSearch
         continue;
       }
       
+      $REX['CUR_CLANG'] = $langID;
+      
       $delete = new rex_sql();
     
       $where = sprintf("ftable = '%s' AND fid = %d AND clang = %d", $delete->escape($this->tablePrefix.'article'), $_id, $langID);
