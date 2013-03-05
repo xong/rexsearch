@@ -123,7 +123,7 @@ if(!empty($_GET['do']) AND $_GET['do'] == 'incremental')
 var globalcount = 0;
 var indexArray = new Array();
 var quotient = 0;
-var maxProgressbarWidth = jQuery('#rexsearch_generate_inprogress').attr('offsetWidth');
+var maxProgressbarWidth = jQuery('#rexsearch_generate_inprogress').width();
 var startTime = new Date();
 var h,m,s,duration,average,timeleft;
 
