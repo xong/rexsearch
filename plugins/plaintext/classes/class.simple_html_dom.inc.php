@@ -92,15 +92,6 @@ class simple_html_dom_node {
     /*public*/ var $parent = null;
     /*public*/ var $_ = array();
     /*private*/ var $dom = null;
-    
-    function simple_html_dom_node() {
-        //destructor
-        register_shutdown_function(array(&$this, '__destruct'));
-        
-        //constructor
-        $argcv = func_get_args();
-        call_user_func_array(array(&$this, '__construct'), $argcv);
-    }
 
     function __construct($dom) {
         $this->dom = $dom;
@@ -560,15 +551,6 @@ class simple_html_dom {
         'nobr'=>array('nobr'=>1),
     );
     
-    function simple_html_dom() {
-        //destructor
-        register_shutdown_function(array(&$this, '__destruct'));
-        
-        //constructor
-        $argcv = func_get_args();
-        call_user_func_array(array(&$this, '__construct'), $argcv);
-    }
-
     function __construct($str=null) {
         if ($str) {
             if (preg_match("/^http:\/\//i",$str) || is_file($str)) 
