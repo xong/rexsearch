@@ -1196,7 +1196,7 @@ class RexSearch
   
   
   /**
-    * Sets the IDs of the Articles which are only to be searched through.
+    * Sets the IDs of the articles which are only to be searched through.
     * 
     * Expects an array with the IDs as parameters.
     */
@@ -1207,7 +1207,7 @@ class RexSearch
   
   
   /**
-    * Sets the IDs of the Articles which are only to be searched through.
+    * Sets the IDs of the categories which are only to be searched through.
     * 
     * Expects an array with the IDs as parameters.
     */
