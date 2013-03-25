@@ -333,9 +333,8 @@ function a587_handle_extensionpoint($_params)
       }
     break;
     
-    case 'SLICE_SHOW':
-      if(strpos($_params['subject'],'<div class="rex-message"><div class="rex-info">') AND (!empty($_params['function']) OR (!empty($_REQUEST['slice_id']) AND $_REQUEST['slice_id'] == $_params['slice_id'])))
-        $rexsearch->indexArticle($_params['article_id'],$_params['clang']);
+    case 'SLICE_UPDATED':
+      $rexsearch->indexArticle($_params['article_id'],$_params['clang']);
     break;
   }
   
