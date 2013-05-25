@@ -552,7 +552,7 @@ echo a587_getSettingsFormSection(
       
       legend
       .css('cursor','pointer')
-      .css('padding-right', (mainWidth - legend.innerWidth() + parseInt(legend.css('padding-right').replace(/[^0-9]+/,''))) + 'px')
+      .css('width', (mainWidth - parseInt(legend.css('padding-right').replace(/[^0-9]+/,'')) - parseInt(legend.css('padding-left').replace(/[^0-9]+/,''))) + 'px')
       .css('border-bottom','1px solid #cbcbcb')
       .mouseover(function()
       {
