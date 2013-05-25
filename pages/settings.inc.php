@@ -526,372 +526,377 @@ echo a587_getSettingsFormSection(
 <script type="text/javascript">
 // <![CDATA[
 // width of the formular
-var mainWidth = jQuery('#a587-form').attr('offsetWidth');
-
-// set loading image for filesearch-config
-jQuery('#a587_files legend').append(
-  jQuery('<span>')
-  .attr('class','loading')
-);
-
-// accordion
-jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
+(function($)
 {
-  var legend = jQuery('legend', elem);
-  var wrapper = jQuery('.rex-form-wrapper', elem);
-  var speed = wrapper.attr('offsetHeight');
-  
-  wrapper.hide();
-  
-  jQuery(elem)
-    .css('border-bottom','1px solid #fff');
-  
-  legend
-  .css('cursor','pointer')
-  .css('padding-right', (mainWidth - legend.attr('offsetWidth') + parseInt(legend.css('padding-right').replace(/[^0-9]+/,''))) + 'px')
-  .css('border-bottom','1px solid #cbcbcb')
-  .mouseover(function()
+  $(document).ready(function()
   {
-    if(wrapper.css('display') == 'none')
-      jQuery('legend', elem).css('color','#aaa');
-  })
-  .mouseout(function()
-  {
-    legend.css('color','#32353A');
-  })
-  .click(function()
-  {
-    wrapper.slideToggle(speed);
-  });
-});
-
-
-// display links for showing and hiding all sections
-jQuery('#a587-form h2')
-.css('position','relative')
-.append(
-  jQuery('<div>')
-  .css('position','absolute')
-  .css('top','0')
-  .css('right','0')
-  .css('padding','5px 1em')
-  .css('font-size','0.75em')
-  .css('font-weight','900')
-  .append(
-  jQuery('<a><?php echo $I18N->Msg('a587_settings_show_all'); ?><'+'/a>')
-    .css('cursor','pointer')
-    .css('padding','0 1em')
-    .click(function()
-    {
-      jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
-      {
-        jQuery('.rex-form-wrapper', elem).show();
-      })
-    })
-  )
-  .append(
-  jQuery('<a><?php echo $I18N->Msg('a587_settings_show_none'); ?><'+'/a>')
-    .css('cursor','pointer')
-    .click(function()
-    {
-      jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
-      {
-        jQuery('.rex-form-wrapper', elem).hide();
-      })
-    })
-  )
-);
-
-
-// ajax request for sample-text
-jQuery('#a587_rexsearch_highlight')
-.change(function()
-{
-  jQuery.get('index.php?page=rexsearch&ajax=sample&type='+jQuery('#a587_rexsearch_highlight').attr('value'),{},function(data)
-  {
-    jQuery('#a587_sample').html(data);
-  });
-});
-
-
-// directory-selection
-function getElementByValue(elements, value) {
-  var returnElem = false;
-  jQuery.each(elements, function(i, elem)
-  {
-    if(elem.value == value)
-    {
-      returnElem = elem;
-      return false;
-    }
-  });
-  
-  return returnElem;
-}
-
-function setDirs()
-{
-  var depth = 0,dirs = new Array(),found,indexdirs;
-  while(document.getElementById('subdirs_'+depth))
-  {
-    jQuery.each(jQuery('#subdirs_'+depth+' option'), function(i, elem)
-    {
-      if(elem.selected)
-        dirs.push(elem.value);
-    });
+    var mainWidth = $('#a587-form').width();
     
-    depth++;
-  }
-  
-  indexdirs = new Array();
-  for(var k=0; k < dirs.length; k++)
-  {
-    found = false;
-    for(var i=0; i < dirs.length; i++)
-    {
-      //if(dirs[k].substring(0,dirs[k].lastIndexOf('/')) == dirs[i])
-      if((dirs[i].indexOf(dirs[k]) >= 0) && (i != k))
-      {
-        found = true;
-        //dirs.splice(i,1);
-        //break;
-      }
-    }
-    
-    if(!found)
-      indexdirs.push(dirs[k]);
-  }
-  
-  jQuery('#a587_settings_folders').empty();
-  
-  jQuery.each(indexdirs, function(i, elem)
-  {
-    jQuery('#a587_settings_folders')
-    .append(
-      jQuery('<option>')
-      .attr('value', elem)
-      .text(elem)
+    // set loading image for filesearch-config
+    $('#a587_files legend').append(
+      $('<span>')
+      .attr('class','loading')
     );
-  });
-}
 
-function traverseSubdirs(depth, options)
-{
-  var found,empty,activeOptions = new Array(),elem;
-  
-  for(var i = 0; i < options.length; i++)
-  {
-    if((elem = getElementByValue(jQuery('#subdirs_'+(depth-1)+' option'), options[i])) && elem.selected)
-      activeOptions.push(options[i]);
-  }
-  
-  while(document.getElementById('subdirs_'+depth))
-  {
-    empty = true;
-    jQuery.each(jQuery('#subdirs_'+depth+' option'), function(i, elem)
+    // accordion
+    $.each($('#a587-form fieldset'), function(i, elem)
     {
-      found = false;
-      for(var k = 0; k < activeOptions.length; k++)
+      var legend = $('legend', elem);
+      var wrapper = $('.rex-form-wrapper', elem);
+      var speed = wrapper.attr('offsetHeight');
+      
+      wrapper.hide();
+      
+      $(elem)
+        .css('border-bottom','1px solid #fff');
+      
+      legend
+      .css('cursor','pointer')
+      .css('padding-right', (mainWidth - legend.innerWidth() + parseInt(legend.css('padding-right').replace(/[^0-9]+/,''))) + 'px')
+      .css('border-bottom','1px solid #cbcbcb')
+      .mouseover(function()
       {
-        found = found || (elem.value.indexOf(activeOptions[k]) >= 0);
+        if(wrapper.css('display') == 'none')
+          $('legend', elem).css('color','#aaa');
+      })
+      .mouseout(function()
+      {
+        legend.css('color','#32353A');
+      })
+      .click(function()
+      {
+        wrapper.slideToggle(speed);
+      });
+    });
+
+
+    // display links for showing and hiding all sections
+    $('#a587-form h2')
+    .css('position','relative')
+    .append(
+      $('<div>')
+      .css('position','absolute')
+      .css('top','0')
+      .css('right','0')
+      .css('padding','5px 1em')
+      .css('font-size','0.75em')
+      .css('font-weight','900')
+      .append(
+      $('<a><?php echo $I18N->Msg('a587_settings_show_all'); ?><'+'/a>')
+        .css('cursor','pointer')
+        .css('padding','0 1em')
+        .click(function()
+        {
+          $.each($('#a587-form fieldset'), function(i, elem)
+          {
+            $('.rex-form-wrapper', elem).show();
+          })
+        })
+      )
+      .append(
+      $('<a><?php echo $I18N->Msg('a587_settings_show_none'); ?><'+'/a>')
+        .css('cursor','pointer')
+        .click(function()
+        {
+          $.each($('#a587-form fieldset'), function(i, elem)
+          {
+            $('.rex-form-wrapper', elem).hide();
+          })
+        })
+      )
+    );
+
+
+    // ajax request for sample-text
+    $('#a587_rexsearch_highlight')
+    .change(function()
+    {
+      $.get('index.php?page=rexsearch&ajax=sample&type='+$('#a587_rexsearch_highlight').attr('value'),{},function(data)
+      {
+        $('#a587_sample').html(data);
+      });
+    });
+
+    // directory-selection
+    function getElementByValue(elements, value) {
+      var returnElem = false;
+      $.each(elements, function(i, elem)
+      {
+        if(elem.value == value)
+        {
+          returnElem = elem;
+          return false;
+        }
+      });
+      
+      return returnElem;
+    }
+
+    function setDirs()
+    {
+      var depth = 0,dirs = new Array(),found,indexdirs;
+      while(document.getElementById('subdirs_'+depth))
+      {
+        $.each($('#subdirs_'+depth+' option'), function(i, elem)
+        {
+          if(elem.selected)
+            dirs.push(elem.value);
+        });
+        
+        depth++;
       }
       
-      if(!found)
-        jQuery(elem).remove();
-      else
-        empty = false;
-    });
-    
-    if(empty)
-    {
-      jQuery('#subdirs_'+depth).remove();
-      jQuery('#subdirselectlabel_'+depth).remove();
-    }
-    
-    depth++;
-  }
-}
-
-function a587_serialize(a)
-{
-  var anew = new Array();
-  for(var i = 0; i < a.length; i++)
-    anew.push('"' + (a[i].replace(/"/g, '\\"')) + '"');
-  return '[' + anew.join(',') + ']';
-}
-
-function createSubdirSection(depth,autoselect)
-{
-  var parent,options,startdirstring = '',startdirs = new Array();
-  if(depth == 0)
-  {
-    parent = '#a587_settings_folders';
-  }
-  else
-  {
-    parent = '#subdirs_'+(depth-1);
-    jQuery.each(jQuery('#subdirs_'+(depth-1)+' option'), function(i, elem)
-    {
-      if(elem.selected)
+      indexdirs = new Array();
+      for(var k=0; k < dirs.length; k++)
       {
-        startdirs.push(elem.value);
-      }
-    });
-  }
-  
-  if(depth > 0 && !startdirs.length)
-  {
-    var currentDepth = depth;
-    while(document.getElementById('subdirs_'+currentDepth))
-    {
-      jQuery('#subdirs_'+(currentDepth)).remove();
-      jQuery('#subdirselectlabel_'+(currentDepth++)).remove();
-    }
-    
-    jQuery('#a587_files .loading').remove();
-    
-    while(document.getElementById('subdirs_'+(--depth)))
-      jQuery('#subdirs_'+(depth--)).removeAttr('disabled');
-    
-    return false;
-  }
-  else
-  {
-    jQuery.post('index.php?page=rexsearch&ajax=getdirs', {'startdirs':a587_serialize(startdirs)}, function(options)
-    {
-      if(!document.getElementById('subdirs_'+depth) && options.length > 0)
-      {
-        jQuery(parent)
-        .after(
-          jQuery('<select>')
-          .attr('id','subdirs_'+depth)
-          .attr('class','rex-form-text subdirselect')
-          .attr('multiple','multiple')
-          .attr('size','10')
-          .change(function()
+        found = false;
+        for(var i=0; i < dirs.length; i++)
+        {
+          //if(dirs[k].substring(0,dirs[k].lastIndexOf('/')) == dirs[i])
+          if((dirs[i].indexOf(dirs[k]) >= 0) && (i != k))
           {
-            createSubdirSection(depth+1);
-            traverseSubdirs(depth+1, options);
-            setDirs();
-          })
-        )
-        .after(
-          jQuery('<label>')
-          .text(('<?php echo $I18N->Msg('a587_settings_folders_dirselect_label'); ?>').replace(/%DEPTH%/, depth))
-          .attr('for','subdirs_'+depth)
-          .attr('class','subdirselectlabel')
-          .attr('id','subdirselectlabel_'+depth)
-        );
+            found = true;
+            //dirs.splice(i,1);
+            //break;
+          }
+        }
         
-        if(autoselect)
-          jQuery('#subdirs_'+depth).attr('disabled','disabled');
+        if(!found)
+          indexdirs.push(dirs[k]);
       }
+      
+      $('#a587_settings_folders').empty();
+      
+      $.each(indexdirs, function(i, elem)
+      {
+        $('#a587_settings_folders')
+        .append(
+          $('<option>')
+          .attr('value', elem)
+          .text(elem)
+        );
+      });
+    }
+
+    function traverseSubdirs(depth, options)
+    {
+      var found,empty,activeOptions = new Array(),elem;
       
       for(var i = 0; i < options.length; i++)
       {
-        if(!getElementByValue(jQuery('#subdirs_'+depth+' option'), options[i]))
+        if((elem = getElementByValue($('#subdirs_'+(depth-1)+' option'), options[i])) && elem.selected)
+          activeOptions.push(options[i]);
+      }
+      
+      while(document.getElementById('subdirs_'+depth))
+      {
+        empty = true;
+        $.each($('#subdirs_'+depth+' option'), function(i, elem)
         {
+          found = false;
+          for(var k = 0; k < activeOptions.length; k++)
+          {
+            found = found || (elem.value.indexOf(activeOptions[k]) >= 0);
+          }
+          
+          if(!found)
+            $(elem).remove();
+          else
+            empty = false;
+        });
+        
+        if(empty)
+        {
+          $('#subdirs_'+depth).remove();
+          $('#subdirselectlabel_'+depth).remove();
+        }
+        
+        depth++;
+      }
+    }
+
+    function a587_serialize(a)
+    {
+      var anew = new Array();
+      for(var i = 0; i < a.length; i++)
+        anew.push('"' + (a[i].replace(/"/g, '\\"')) + '"');
+      return '[' + anew.join(',') + ']';
+    }
+
+    function createSubdirSection(depth,autoselect)
+    {
+      var parent,options,startdirstring = '',startdirs = new Array();
+      if(depth == 0)
+      {
+        parent = '#a587_settings_folders';
+      }
+      else
+      {
+        parent = '#subdirs_'+(depth-1);
+        $.each($('#subdirs_'+(depth-1)+' option'), function(i, elem)
+        {
+          if(elem.selected)
+          {
+            startdirs.push(elem.value);
+          }
+        });
+      }
+      
+      if(depth > 0 && !startdirs.length)
+      {
+        var currentDepth = depth;
+        while(document.getElementById('subdirs_'+currentDepth))
+        {
+          $('#subdirs_'+(currentDepth)).remove();
+          $('#subdirselectlabel_'+(currentDepth++)).remove();
+        }
+        
+        $('#a587_files .loading').remove();
+        
+        while(document.getElementById('subdirs_'+(--depth)))
+          $('#subdirs_'+(depth--)).removeAttr('disabled');
+        
+        return false;
+      }
+      else
+      {
+        $.post('index.php?page=rexsearch&ajax=getdirs', {'startdirs':a587_serialize(startdirs)}, function(options)
+        {
+          if(!document.getElementById('subdirs_'+depth) && options.length > 0)
+          {
+            $(parent)
+            .after(
+              $('<select>')
+              .attr('id','subdirs_'+depth)
+              .attr('class','rex-form-text subdirselect')
+              .attr('multiple','multiple')
+              .attr('size','10')
+              .change(function()
+              {
+                createSubdirSection(depth+1);
+                traverseSubdirs(depth+1, options);
+                setDirs();
+              })
+            )
+            .after(
+              $('<label>')
+              .text(('<?php echo $I18N->Msg('a587_settings_folders_dirselect_label'); ?>').replace(/%DEPTH%/, depth))
+              .attr('for','subdirs_'+depth)
+              .attr('class','subdirselectlabel')
+              .attr('id','subdirselectlabel_'+depth)
+            );
+            
+            if(autoselect)
+              $('#subdirs_'+depth).attr('disabled','disabled');
+          }
+          
+          for(var i = 0; i < options.length; i++)
+          {
+            if(!getElementByValue($('#subdirs_'+depth+' option'), options[i]))
+            {
+              if(autoselect)
+              {
+                var found = false;
+                $('#a587_settings_folders option').each(function(j, elem)
+                {
+                  found = found || (elem.value.indexOf(options[i]) >= 0);
+                  
+                  if(found)
+                    return false;
+                });
+                
+                if(found)
+                {
+                  $('#subdirs_'+depth)
+                  .append(
+                    $('<option>')
+                    .attr('value', options[i])
+                    .attr('selected', 'selected')
+                    .text(options[i])
+                  );
+                }
+                else
+                {
+                  $('#subdirs_'+depth)
+                  .append(
+                    $('<option>')
+                    .attr('value', options[i])
+                    .text(options[i])
+                  );
+                }
+              }
+              else
+              {
+                $('#subdirs_'+depth)
+                .append(
+                  $('<option>')
+                  .attr('value', options[i])
+                  .text(options[i])
+                );
+              }
+            }
+          }
+          
           if(autoselect)
           {
-            var found = false;
-            jQuery('#a587_settings_folders option').each(function(j, elem)
+            var maxDepth = 0,splitted,current,count;
+            $('#a587_settings_folders option').each(function(i, elem)
             {
-              found = found || (elem.value.indexOf(options[i]) >= 0);
-              
-              if(found)
-                return false;
+              if((elem.id != 'a587_optiondummy') && ((count = elem.value.split('/').length-2) > maxDepth))
+                maxDepth = count;
             });
             
-            if(found)
+            if(maxDepth >= depth)
             {
-              jQuery('#subdirs_'+depth)
-              .append(
-                jQuery('<option>')
-                .attr('value', options[i])
-                .attr('selected', 'selected')
-                .text(options[i])
-              );
+              createSubdirSection(depth+1,true);
             }
             else
             {
-              jQuery('#subdirs_'+depth)
-              .append(
-                jQuery('<option>')
-                .attr('value', options[i])
-                .text(options[i])
-              );
+              $('#a587_files .loading').remove();
+              
+              depth = 0;
+              while(document.getElementById('subdirs_'+depth))
+                $('#subdirs_'+(depth++)).removeAttr('disabled');
+              
+              depth--;
+              
+              // adapt width of legend
+              var legend = $('#a587_files legend');
+              legend.css('padding-right', (mainWidth - legend.attr('offsetWidth') + parseInt(legend.css('padding-right').replace(/[^0-9]+/,''))) + 'px');
             }
           }
-          else
-          {
-            jQuery('#subdirs_'+depth)
-            .append(
-              jQuery('<option>')
-              .attr('value', options[i])
-              .text(options[i])
-            );
-          }
-        }
-      }
+        }, 'json');
       
-      if(autoselect)
-      {
-        var maxDepth = 0,splitted,current,count;
-        jQuery('#a587_settings_folders option').each(function(i, elem)
-        {
-          if((elem.id != 'a587_optiondummy') && ((count = elem.value.split('/').length-2) > maxDepth))
-            maxDepth = count;
-        });
-        
-        if(maxDepth >= depth)
-        {
-          createSubdirSection(depth+1,true);
-        }
-        else
-        {
-          jQuery('#a587_files .loading').remove();
-          
-          depth = 0;
-          while(document.getElementById('subdirs_'+depth))
-            jQuery('#subdirs_'+(depth++)).removeAttr('disabled');
-          
-          depth--;
-          
-          // adapt width of legend
-          var legend = jQuery('#a587_files legend');
-          legend.css('padding-right', (mainWidth - legend.attr('offsetWidth') + parseInt(legend.css('padding-right').replace(/[^0-9]+/,''))) + 'px');
-        }
+      return true;
       }
-    }, 'json');
-  
-  return true;
-  }
-}
+    }
 
-var options;
-// beautifying the indexed folders selectbox and selecting the options in the subdir-selectboxes
-jQuery('#a587_settings_folders').attr('disabled','disabled');
-jQuery.each(options = jQuery('#a587_settings_folders option'), function(i, elem)
-{
-  var splitted,current,depth=0;
-  
-  elem.selected = false;
-  
-  if(options.length - 1 == i)
-    createSubdirSection(depth,true);
-});
+    var options;
+    // beautifying the indexed folders selectbox and selecting the options in the subdir-selectboxes
+    $('#a587_settings_folders').attr('disabled','disabled');
+    $.each(options = $('#a587_settings_folders option'), function(i, elem)
+    {
+      var splitted,current,depth=0;
+      
+      elem.selected = false;
+      
+      if(options.length - 1 == i)
+        createSubdirSection(depth,true);
+    });
 
-jQuery('#a587_settings_form').submit(function()
-{
-  jQuery('#a587_settings_folders').removeAttr('disabled');
-  jQuery.each(jQuery('#a587_settings_folders option'), function(i, elem)
-  {
-    if(elem.value != '')
-      elem.selected = true;
+    $('#a587_settings_form').submit(function()
+    {
+      $('#a587_settings_folders').removeAttr('disabled');
+      $.each($('#a587_settings_folders option'), function(i, elem)
+      {
+        if(elem.value != '')
+          elem.selected = true;
+      });
+      
+      return true;
+    });
   });
-  
-  return true;
-});
+}(jQuery));
 
 // ]]>
 </script>
