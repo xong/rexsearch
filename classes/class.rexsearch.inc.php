@@ -2017,6 +2017,7 @@ class RexSearch
       return $this->cachedArray;
     }
     
+    $return = array();
     $return['simwordsnewsearch'] = '';
     $return['simwords'] = array();
     if($this->similarwords)
@@ -2287,7 +2288,6 @@ class RexSearch
     #echo '<pre>'.$query.'</pre>';
     $sqlResult = $sql->getArray($query);
     
-    $return = array();
     $indexIds = array();
     $count = 0;
     
