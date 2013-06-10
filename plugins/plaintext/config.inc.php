@@ -21,8 +21,6 @@ if(is_object($REX['USER']) AND ($REX['USER']->hasPerm($parent.'['.$mypage.']') O
   
   rex_register_extension('A587_PLAINTEXT', 'a587_doPlaintext');
   
-  // Including CSS-File for Backend
-  
   if(!file_exists($settingFile = dirname(__FILE__).'/settings.conf'))
   {
     a587_plaintext_saveSettings(array(
@@ -47,8 +45,8 @@ if($REX['REDAXO'] AND (rex_request('page', 'string') == $parent) AND (rex_reques
     $mypage = 'plaintext';
     
     if(function_exists('str_ireplace'))
-      return str_ireplace('</head>',"\t".'<script type="text/javascript" src="../files/addons/'.$parent.'/plugins/'.$mypage.'/ui.core.js"></script><script type="text/javascript" src="../files/addons/'.$parent.'/plugins/'.$mypage.'/ui.sortable.js"></script>'."\n".'</head>',$params['subject']);
-    return str_replace('</head>',"\t".'<script type="text/javascript" src="../files/addons/'.$parent.'/plugins/'.$mypage.'/ui.core.js"></script><script type="text/javascript" src="../files/addons/'.$parent.'/plugins/'.$mypage.'/ui.sortable.js"></script>'."\n".'</head>',$params['subject']);
+      return str_ireplace('</head>',"\t".'<script type="text/javascript" src="../files/addons/'.$parent.'/plugins/'.$mypage.'/jquery.ui.custom.js"></script>'."\n".'</head>',$params['subject']);
+    return str_replace('</head>',"\t".'<script type="text/javascript" src="../files/addons/'.$parent.'/plugins/'.$mypage.'/jquery.ui.custom.js"></script>'."\n".'</head>',$params['subject']);
   }
   
   rex_register_extension('OUTPUT_FILTER', 'a587_plaintext_add_css');

@@ -1,1 +1,1 @@
-Adds support for manual plaintext conversion.
+REDAXO Default-Theme
