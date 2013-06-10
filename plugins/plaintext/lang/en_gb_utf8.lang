@@ -5,7 +5,7 @@ a587_rexsearch_plaintext_description = Elements marked with the symbol <img src=
 a587_rexsearch_plaintext_selectors = CSS-selectors (comma&#x2011;separated)
 a587_rexsearch_plaintext_selectors_label = All matching elements will be removed from plaintext.
 a587_rexsearch_plaintext_regex = Regular Expressions (row&#x2011;separated)
-a587_rexsearch_plaintext_regex_label = 1. Line: Regex<br />2. Line: Replacement<br /><a href="http://php.net/preg_replace">preg_replace()</a>
+a587_rexsearch_plaintext_regex_label = Every 1. Line: Regex<br />Every 2. Line: Replacement<br /><a href="http://php.net/preg_replace">preg_replace()</a><br /><br />Example:<br />~\s+~ism<br /> <em>(space)</em>
 a587_rexsearch_plaintext_striptags = Remove HTML-tags
 a587_rexsearch_plaintext_striptags_label = Executes the strip_tags()-function.
 a587_rexsearch_plaintext_textile = parse with textile

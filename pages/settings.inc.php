@@ -75,7 +75,6 @@ if(!empty($_GET['suggestnewindex']))
 
 <div class="rex-addon-output" id="a587-form">
 <h2 class="rex-hl2">Einstellungen</h2>
-<div class="rex-area">
 
 <div class="rex-form">
 <form method="post" action="index.php?page=rexsearch&amp;subpage=settings" id="a587_settings_form">
@@ -520,7 +519,6 @@ echo a587_getSettingsFormSection(
 </form>
 </div>
 
-</div>
 </div>
 
 <script type="text/javascript">

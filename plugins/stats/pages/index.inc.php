@@ -37,7 +37,6 @@ rex_title("rexsearch", $REX['ADDON'][$page]['SUBPAGES']);
 ?>
 <div class="rex-addon-output" id="a587-form">
 <h2 class="rex-hl2" style="position: relative;"><?php echo $I18N->Msg('a587_stats_title'); ?></h2>
-<div class="rex-area">
 
 <div class="rex-form">
 <form method="post" action="index.php?page=rexsearch&amp;subpage=stats" id="a587_stats_form">
@@ -352,7 +351,6 @@ jQuery('#a587-form legend select,#a587-form legend span').click(function(event)
 </form>
 </div>
 
-</div>
 </div>
 <?php
 include $REX['INCLUDE_PATH'].'/layout/bottom.php';

@@ -1,1 +1,1 @@
-REDAXO Default-Theme
+Adds some statistical information.

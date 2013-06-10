@@ -25,7 +25,6 @@ if(!empty($_GET['save']))
 ?>
 <div class="rex-addon-output" id="a587-form">
 <h2 class="rex-hl2" style="position: relative;"><?php echo $I18N->Msg('a587_plaintext_title'); ?></h2>
-<div class="rex-area">
 
 <div class="rex-form">
 <form method="post" action="index.php?page=<?php echo $parent; ?>&amp;subpage=<?php echo $mypage; ?>" id="a587_<?php echo $mypage; ?>_form">
@@ -198,121 +197,125 @@ echo a587_getSettingsFormSection(
   </div>
 <script type="text/javascript">
 // <![CDATA[
+(function($)
+{
+  $(document).ready(function()
+  {
+    var mainWidth = jQuery('#a587-form').width();
+    var ondrag = false;
 
-var mainWidth = jQuery('#a587-form').attr('offsetWidth');
-var ondrag = false;
-
-jQuery('#sortable-elements').sortable({
-  connectWith: jQuery('#sortable-elements'),
-  opacity: 0.9,
-  placeholder: 'placeholder',
-  forcePlaceholderSize: false,
-  containment: '#rex-website',
-  start: function(event, ui) {
-    ondrag = true;
-    jQuery('legend', ui.item).css('color', '#fff');
-  },
-  stop: function(event, ui) {
-    jQuery('legend', ui.item).css('color', '#2C8EC0');
-    
-    var order = new Array();
-    jQuery('#a587_rexsearch_plaintext_selectors,#a587_rexsearch_plaintext_regex,#a587_rexsearch_plaintext_striptags').each(function()
-    {
-      order.push(this.name.match(/\[([a-zA-Z]+)\]/)[1]);
+    jQuery('#sortable-elements').sortable({
+      connectWith: jQuery('#sortable-elements'),
+      opacity: 0.9,
+      placeholder: 'placeholder',
+      forcePlaceholderSize: false,
+      containment: '#rex-website',
+      start: function(event, ui) {
+        ondrag = true;
+        jQuery('legend', ui.item).css('color', '#fff');
+      },
+      stop: function(event, ui) {
+        jQuery('legend', ui.item).css('color', '#2C8EC0');
+        
+        var order = new Array();
+        jQuery('#a587_rexsearch_plaintext_selectors,#a587_rexsearch_plaintext_regex,#a587_rexsearch_plaintext_striptags').each(function()
+        {
+          order.push(this.name.match(/\[([a-zA-Z]+)\]/)[1]);
+        });
+        jQuery('input[name=a587_rexsearch_plaintext[order]]').attr('value', order.join(','));
+        
+        setTimeout(function(){ondrag = false;}, 100);
+      }
     });
-    jQuery('input[name=a587_rexsearch_plaintext[order]]').attr('value', order.join(','));
-    
-    setTimeout(function(){ondrag = false;}, 100);
-  }
-});
 
-jQuery('#a587_rexsearch_plaintext_selectors_fieldset legend,#a587_rexsearch_plaintext_regex_fieldset legend,#a587_rexsearch_plaintext_textile_fieldset legend,#a587_rexsearch_plaintext_striptags_fieldset legend').each(function()
-{
-  var text = jQuery(this).html();
-  jQuery(this).css('cursor', 'move').html('')
-  .append(jQuery('<span>')
-    .html(text)
-    .css('background', 'url(../files/addons/rexsearch/plugins/plaintext/move.png) no-repeat 5px top')
-    .css('padding-left', '20px')
-    .css('display', 'block')
-    .css('line-height', '18px')
-  );
-});
-
-// display links for showing and hiding all sections
-jQuery('#a587-form h2')
-.css('position','relative')
-.append(
-  jQuery('<div>')
-  .css('position','absolute')
-  .css('top','0')
-  .css('right','0')
-  .css('padding','5px 1em')
-  .css('font-size','0.75em')
-  .css('font-weight','900')
-  .append(
-  jQuery('<a><?php echo $I18N->Msg('a587_settings_show_all'); ?><'+'/a>')
-    .css('cursor','pointer')
-    .css('padding','0 1em')
-    .click(function()
+    jQuery('#a587_rexsearch_plaintext_selectors_fieldset legend,#a587_rexsearch_plaintext_regex_fieldset legend,#a587_rexsearch_plaintext_textile_fieldset legend,#a587_rexsearch_plaintext_striptags_fieldset legend').each(function()
     {
-      jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
-      {
-        jQuery('.rex-form-wrapper', elem).show();
-      })
-    })
-  )
-  .append(
-  jQuery('<a><?php echo $I18N->Msg('a587_settings_show_none'); ?><'+'/a>')
-    .css('cursor','pointer')
-    .click(function()
-    {
-      jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
-      {
-        jQuery('.rex-form-wrapper', elem).hide();
-      })
-    })
-  )
-);
+      var text = jQuery(this).html();
+      jQuery(this).css('cursor', 'move').html('')
+      .append(jQuery('<span>')
+        .html(text)
+        .css('background', 'url(../files/addons/rexsearch/plugins/plaintext/move.png) no-repeat 5px top')
+        .css('padding-left', '20px')
+        .css('display', 'block')
+        .css('line-height', '18px')
+      );
+    });
 
-// accordion
-jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
-{
-  var legend = jQuery('legend', elem);
-  var wrapper = jQuery('.rex-form-wrapper', elem);
-  var speed = wrapper.attr('offsetHeight');
-  
-  wrapper.hide();
-  
-  jQuery(elem)
-    .css('border-bottom','1px solid #fff');
-  
-  legend
-  .css('cursor','pointer')
-  .css('padding-right', (mainWidth - legend.attr('offsetWidth') + parseInt(legend.css('padding-right').replace(/[^0-9]+/,''))) + 'px')
-  .css('border-bottom','1px solid #cbcbcb')
-  .mouseover(function()
-  {
-    if(wrapper.css('display') == 'none')
-      jQuery('legend', elem).css('color','#aaa');
-  })
-  .mouseout(function()
-  {
-    legend.css('color','#32353A');
-  })
-  .click(function()
-  {
-    if(!ondrag)
-      wrapper.slideToggle(speed);
+    // display links for showing and hiding all sections
+    jQuery('#a587-form h2')
+    .css('position','relative')
+    .append(
+      jQuery('<div>')
+      .css('position','absolute')
+      .css('top','0')
+      .css('right','0')
+      .css('padding','5px 1em')
+      .css('font-size','0.75em')
+      .css('font-weight','900')
+      .append(
+      jQuery('<a><?php echo $I18N->Msg('a587_settings_show_all'); ?><'+'/a>')
+        .css('cursor','pointer')
+        .css('padding','0 1em')
+        .click(function()
+        {
+          jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
+          {
+            jQuery('.rex-form-wrapper', elem).show();
+          })
+        })
+      )
+      .append(
+      jQuery('<a><?php echo $I18N->Msg('a587_settings_show_none'); ?><'+'/a>')
+        .css('cursor','pointer')
+        .click(function()
+        {
+          jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
+          {
+            jQuery('.rex-form-wrapper', elem).hide();
+          })
+        })
+      )
+    );
+
+    // accordion
+    jQuery.each(jQuery('#a587-form fieldset'), function(i, elem)
+    {
+      var legend = jQuery('legend', elem);
+      var wrapper = jQuery('.rex-form-wrapper', elem);
+      var speed = wrapper.attr('offsetHeight');
+      
+      wrapper.hide();
+      
+      jQuery(elem)
+        .css('border-bottom','1px solid #fff');
+      
+      legend
+      .css('cursor','pointer')
+      .css('width', (mainWidth - parseInt(legend.css('padding-right').replace(/[^0-9]+/,'')) - parseInt(legend.css('padding-left').replace(/[^0-9]+/,''))) + 'px')
+      .css('border-bottom','1px solid #cbcbcb')
+      .mouseover(function()
+      {
+        if(wrapper.css('display') == 'none')
+          jQuery('legend', elem).css('color','#aaa');
+      })
+      .mouseout(function()
+      {
+        legend.css('color','#32353A');
+      })
+      .click(function()
+      {
+        if(!ondrag)
+          wrapper.slideToggle(speed);
+      });
+    });
   });
-});
+}(jQuery));
 
 // ]]>
 </script>
 </form>
 </div>
 
-</div>
 </div>
 <?php
 include $REX['INCLUDE_PATH'].'/layout/bottom.php';
