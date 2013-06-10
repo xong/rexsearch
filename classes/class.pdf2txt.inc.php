@@ -30,9 +30,9 @@ class pdf2txt
     $this->dest = $_dest;
   }
   
-  function directConvert($_data)
+  static function directConvert($_data)
   {
-    $pdf2txt = new pdf2txt;
+    $pdf2txt = new self();
     return $pdf2txt->convert($_data);
   }
   
