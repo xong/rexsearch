@@ -1,1 +1,1 @@
-Adds automatic indexiung support for rex_form- and rex_xform-tables.
+Adds automatic indexing support for rex_form- and rex_xform-tables.
