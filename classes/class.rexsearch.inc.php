@@ -1886,7 +1886,7 @@ class RexSearch
       $delete2->setTable($this->tablePrefix.'587_searchcache');
       $delete2->delete();
     }
-    elseif(is_array($_indexIds))
+    elseif(is_array($_indexIds) AND !empty($_indexIds))
     {
       $sql = new rex_sql();
       
@@ -1898,7 +1898,7 @@ class RexSearch
         implode(',',$_indexIds)
       );
       
-      $deleteIds = array();
+      $deleteIds = array(0);
       foreach($sql->getArray($query) as $cacheId)
         $deleteIds[] = $cacheId['cache_id'];
       
