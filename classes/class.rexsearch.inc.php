@@ -2091,7 +2091,7 @@ class RexSearch
     }
     
     if($this->similarwordsPermanent)
-      $keywordCount = $this->parseSearchString($return['simwordsnewsearch']);
+      $keywordCount = $this->parseSearchString($this->searchString.' '.$return['simwordsnewsearch']);
     
     $searchColumns = array();
     switch($this->textMode)
