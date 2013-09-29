@@ -354,4 +354,3 @@ jQuery('#a587-form legend select,#a587-form legend span').click(function(event)
 </div>
 <?php
 include $REX['INCLUDE_PATH'].'/layout/bottom.php';
-?>

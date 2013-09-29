@@ -319,4 +319,3 @@ echo a587_getSettingsFormSection(
 </div>
 <?php
 include $REX['INCLUDE_PATH'].'/layout/bottom.php';
-?>

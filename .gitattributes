@@ -22,3 +22,6 @@
 *.RTF	 diff=astextplain
 
 .gitattributes export-ignore
+settings.conf export-ignore
+plugins/plaintext/settings.conf export-ignore
+plugins/stats/settings.conf export-ignore

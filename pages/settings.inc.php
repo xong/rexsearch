@@ -419,9 +419,10 @@ foreach($sql_tables->showTables() as $table)
         case 'char':
         case 'varc':*/
           $options[] = array(
-            'value' => $table.'`.`'.$column['name'],
-            'selected' => in_array($column['name'],(!empty($REX['ADDON']['settings']['rexsearch']['include'][$table]) AND is_array($REX['ADDON']['settings']['rexsearch']['include'][$table]))?$REX['ADDON']['settings']['rexsearch']['include'][$table]:array()),
-            'name' => $table.'  .  '.$column['name']
+            'value' => htmlspecialchars($table.'`.`'.$column['name']),
+            'checked' => in_array($column['name'],(!empty($REX['ADDON']['settings']['rexsearch']['include'][$table]) AND is_array($REX['ADDON']['settings']['rexsearch']['include'][$table]))?$REX['ADDON']['settings']['rexsearch']['include'][$table]:array()),
+            'name' => $table.'  .  '.$column['name'],
+            'id' => $table.'  .  '.$column['name']
           );
       //}
     }
@@ -432,10 +433,11 @@ echo a587_getSettingsFormSection(
   $I18N->Msg('a587_settings_include'),
   array(
     array(
-      'type' => 'multipleselect',
+      'type' => 'multiplecheckboxes',
       'id' => 'a587_rexsearch_include',
       'name' => 'a587_rexsearch[include][]',
-      'label' => '&lt;table&gt;.&lt;column&gt;',
+      //'label' => '&lt;table&gt;.&lt;column&gt;',
+      'label' => '',
       'size' => 20,
       'options' => $options
     )
@@ -614,6 +616,50 @@ echo a587_getSettingsFormSection(
         $('#a587_sample').html(data);
       });
     });
+
+
+    // categorize datebase tables
+    var current_table = '';
+    $('#a587_include .checkbox').each(function(i, elem)
+    {
+      var table = $('input', elem).attr('value').split(/`.`/)[0];
+      
+      $('label', elem).text($('input', elem).attr('value').split(/`.`/)[1]);
+      
+      if(current_table != table)
+      {
+        $(elem).before(
+          $('<div>').addClass('checkbox-heading rex-form-row').text(table).click(function()
+          {
+            var $next = $(this).next();
+            var $elements = $next;
+            while($next.hasClass('checkbox'))
+            {
+              //$next.show();
+              $elements = $elements.add($next);
+              $next = $next.next();
+            }
+            
+            $elements.toggle();
+          })
+        );
+        
+        current_table = table;
+      }
+    });
+    
+    var active_tables = $();
+    $('#a587_include .checkbox input:checked').each(function(i, elem)
+    {
+      var $prev = $(this).closest('.checkbox').prev();
+      while($prev.hasClass('checkbox'))
+        $prev = $prev.prev();
+      
+      active_tables = active_tables.add($prev);
+    });
+    
+    active_tables.click();
+
 
     // directory-selection
     function getElementByValue(elements, value) {

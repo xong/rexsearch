@@ -75,4 +75,3 @@ if(!$pluginssubpageloaded)
 
   include $REX['INCLUDE_PATH'].'/layout/bottom.php';
 }
-?>

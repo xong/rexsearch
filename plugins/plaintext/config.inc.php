@@ -7,7 +7,7 @@ $dir = dirname(__FILE__);
 $REX['ADDON']['version'][$mypage] = '0.2';
 $REX['ADDON']['author'][$mypage] = 'Robert Rupf';
 $REX['ADDON']['supportpage'][$mypage] = 'forum.redaxo.de';
-$REX['EXTPERM'][] = $parent.'['.$mypage.']';
+$REX['EXTRAPERM'][] = $parent.'['.$mypage.']';
 
 require_once $dir.'/functions/functions.inc.php';
 
@@ -51,4 +51,3 @@ if($REX['REDAXO'] AND (rex_request('page', 'string') == $parent) AND (rex_reques
   
   rex_register_extension('OUTPUT_FILTER', 'a587_plaintext_add_css');
 }
-?>

@@ -2373,4 +2373,3 @@ class RexSearch
     return $return;
   }
 }
-?>

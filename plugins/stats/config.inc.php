@@ -6,7 +6,7 @@ $mypage = 'stats';
 $REX['ADDON']['version'][$mypage] = '0.2.1';
 $REX['ADDON']['author'][$mypage] = 'Robert Rupf';
 $REX['ADDON']['supportpage'][$mypage] = 'forum.redaxo.de';
-$REX['EXTPERM'][] = 'rexsearch[stats]';
+$REX['EXTRAPERM'][] = 'rexsearch[stats]';
 
 require dirname(__FILE__).'/classes/class.stats.inc.php';
 require dirname(__FILE__).'/functions/functions.inc.php';
@@ -48,4 +48,3 @@ if(is_object($REX['USER']) AND ($REX['USER']->hasPerm('rexsearch[stats]') OR $RE
   
   $REX['ADDON']['rexsearch_plugins'][$parent][$mypage]['settings'] = a587_config_unserialize(rex_get_file_contents($settingFile));
 }
-?>

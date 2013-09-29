@@ -75,4 +75,3 @@ function a587_stats_bytesize($_value)
     return number_format($_value, $dec, ',', '').' '.$units[$i];
   }
 }
-?>

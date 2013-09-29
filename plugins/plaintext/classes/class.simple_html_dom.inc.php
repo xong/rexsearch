@@ -1021,4 +1021,3 @@ class simple_html_dom {
     $this->root->remove($selector);
   }
 }
-?>

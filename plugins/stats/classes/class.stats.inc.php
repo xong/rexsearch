@@ -207,4 +207,3 @@ geräte mit zwölf reinen PC-Bildschirmen verglichen. Probleme gabs nur im Detail.
     }
   }
 }
-?>

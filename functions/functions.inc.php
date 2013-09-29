@@ -416,6 +416,23 @@ function a587_getSettingsFormSection($id = '', $title = '&nbsp;', $elements = ar
           </p>';
       break;
       
+      // MULTIPLE CHECKBOXES
+      case 'multiplecheckboxes':
+        $checkboxes = '';
+        foreach($element['options'] as $option)
+        {
+          $id = !empty($option['id'])?' id="'.$option['id'].'"':'';
+          $for = !empty($option['id'])?' for="'.$option['id'].'"':'';
+          $checkboxes .= '<div class="checkbox"><input type="checkbox"'.$id.' name="'.$element['name'].'" value="'.$option['value'].'"'.($option['checked'] ? ' checked="checked"' : '').' /> <label'.$for.'>'.$option['name'].'</label></div>';
+        }
+        
+        $return .= '
+          <div class="rex-form-col-a rex-form-text">
+          '.(!empty($element['label']) ? '<label for="'.$element['id'].'">'.$element['label'].'</label>' : '').'
+          <div class="checkboxes">'.$checkboxes.'</div>
+          </div>';
+      break;
+      
       // RADIO
       case 'radio':
         $options = '';
@@ -501,4 +518,3 @@ function a587_config_unserialize($_str)
   
   return $return;
 }
-?>

@@ -294,4 +294,3 @@ class pdf2txt
       return $text;
   }
 }
-?>

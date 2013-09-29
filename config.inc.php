@@ -1,14 +1,13 @@
 <?php
 $mypage = 'rexsearch';
-#error_reporting(E_ALL | E_STRICT);
 
-// general settings for xsearch
+// general settings for rexsearch
 $REX['ADDON']['rxid'][$mypage] = '587';
 $REX['ADDON']['page'][$mypage] = $mypage;    
 $REX['ADDON']['name'][$mypage] = 'RexSearch';
 $REX['ADDON']['perm'][$mypage] = $mypage.'[]';
 $REX['PERM'][] = $mypage.'[]';
-$REX['EXTPERM'][] = $mypage.'[settings]';
+$REX['EXTRAPERM'][] = $mypage.'[settings]';
 
 $REX['ADDON']['version'][$mypage] = '0.7.8';
 $REX['ADDON']['author'][$mypage] = 'Robert Rupf';
@@ -52,11 +51,9 @@ if ($REX['REDAXO']) {
   );
 }
 
-#error_reporting(E_ALL ^ E_STRICT);
 require $REX['ADDON']['dir'][$mypage].'/classes/class.rexsearch.inc.php';
 require $REX['ADDON']['dir'][$mypage].'/functions/functions.inc.php';
 require $REX['ADDON']['dir'][$mypage].'/functions/functions.mb.inc.php';
-#error_reporting(0);
 
 if(!file_exists($settingFile = dirname(__FILE__).'/settings.conf'))
 {
@@ -114,5 +111,4 @@ if ($REX['REDAXO'] AND rex_request('page', 'string') == $mypage)
   
   rex_register_extension('OUTPUT_FILTER', 'a587_add_css');
 }
-#error_reporting(0);
-?>
+

@@ -74,4 +74,3 @@ function a587_getPlaintext($_text,$_remove)
   
   return $_text;
 }
-?>
