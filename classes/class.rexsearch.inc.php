@@ -59,6 +59,7 @@ class RexSearch
   var $includeColumns = array();
   var $includeDirectories = array();
   var $includePath;
+  var $generatedPath;
   var $indexUnknownFileExtensions = false;
   var $indexMediapool = false;
   var $indexMissingFileExtensions = false;
@@ -184,6 +185,7 @@ class RexSearch
     $this->languages = $REX['CLANG'];
     $this->tablePrefix = $REX['TABLE_PREFIX'];
     $this->includePath = $REX['INCLUDE_PATH'];
+    $this->generatedPath = $REX['GENERATED_PATH'];
     $this->utf8 = rex_lang_is_utf8();
     $this->documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
     $this->mediaFolder = $REX['MEDIAFOLDER'];
@@ -606,7 +608,7 @@ class RexSearch
         {
           $rex_article = new rex_article(intval($_id), $langID);
           
-          $article_content_file = $this->includePath.'/generated/articles/'.$_id.'.'.$langID.'.content';
+          $article_content_file = $this->generatedPath.'/articles/'.$_id.'.'.$langID.'.content';
           if(!file_exists($article_content_file))
           {
             include_once ($this->includePath."/functions/function_rex_generate.inc.php");
@@ -838,7 +840,7 @@ class RexSearch
           {
             $rex_article = new rex_article(intval($value['id']), intval($value['clang']));
             $teaser = true;
-            $article_content_file = $this->includePath.'/generated/articles/'.intval($value['id']).'.'.intval($value['clang']).'.content';
+            $article_content_file = $this->generatedPath.'/articles/'.intval($value['id']).'.'.intval($value['clang']).'.content';
             if(!file_exists($article_content_file))
             {
               include_once ($this->includePath."/functions/function_rex_generate.inc.php");
@@ -946,7 +948,7 @@ class RexSearch
         
         if(function_exists('exec'))
         {
-          $tempFile = tempnam($this->includePath.'/generated/files/', 'rexsearch');
+          $tempFile = tempnam($this->generatedPath.'/files/', 'rexsearch');
           
           if($this->utf8)
             $encoding = 'UTF-8';
