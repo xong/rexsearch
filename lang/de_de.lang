@@ -94,5 +94,5 @@ a587_ellipsis = …
 
 a587_cat_deleted = Alle Artikel der Kategorie sind noch im Suchindex enthalten. Sie müssen den <a href="index.php?page=rexsearch&subpage=generate">Suchindex erneuern</a>.
 
-a587_help_wiki = Die Dokumentation des Addons finden Sie unter <a href="http://wiki.redaxo.de/index.php?n=R4.RexSearch">http://wiki.redaxo.de/index.php?n=R4.RexSearch</a>.
-a587_help_forum = Sollten Sie Fragen oder Probleme haben, können Sie diese im Redaxo-Forum stellen: <a href="http://forum.redaxo.de/ftopic12965">http://forum.redaxo.de/ftopic12965</a>.
+a587_help_wiki = Die Dokumentation des Addons finden Sie unter <a href="http://www.redaxo.org/de/wiki/index.php?n=R4.Rexsearch">http://www.redaxo.org/de/wiki/index.php?n=R4.Rexsearch</a>.
+a587_help_forum = Sollten Sie Fragen oder Probleme haben, können Sie diese im Redaxo-Forum stellen: <a href="http://www.redaxo.org/de/forum/addons-f30/addon-rexsearch-fulltext-search-addon-t12965.html">http://www.redaxo.org/de/forum/addons-f30/addon-rexsearch-fulltext-search-addon-t12965.html</a>.

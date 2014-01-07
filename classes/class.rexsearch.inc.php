@@ -87,7 +87,6 @@ class RexSearch
   var $surroundTags = array('<strong>','</strong>');
   var $tablePrefix;
   var $textMode = 'plain';
-  var $utf8 = true;
   var $whitelist = array();
   var $where = '';
   
@@ -186,15 +185,10 @@ class RexSearch
     $this->tablePrefix = $REX['TABLE_PREFIX'];
     $this->includePath = $REX['INCLUDE_PATH'];
     $this->generatedPath = $REX['GENERATED_PATH'];
-    $this->utf8 = rex_lang_is_utf8();
     $this->documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
     $this->mediaFolder = $REX['MEDIAFOLDER'];
     
-    #$I18N->appendFile($REX['INCLUDE_PATH'].'/addons/rexsearch/lang/');
-    if($this->utf8)
-      $locale = 'de_de_utf8';
-    else
-      $locale = 'de_de';
+    $locale = 'de_de';
     
     $langfile = new i18n($locale, $REX['INCLUDE_PATH'].'/addons/rexsearch/lang/');
     $this->ellipsis = $langfile->Msg('a587_ellipsis');
@@ -202,10 +196,7 @@ class RexSearch
     // german stopwords
     if($_useStopwords)
     {
-      if($this->utf8)
-        include $this->includePath.'/addons/rexsearch/lang/stopwords_utf8.inc.php';
-      else
-        include $this->includePath.'/addons/rexsearch/lang/stopwords.inc.php';
+      include $this->includePath.'/addons/rexsearch/lang/stopwords.inc.php';
       $this->stopwords = $german_stopwords;
     }
   }
@@ -426,16 +417,14 @@ class RexSearch
   
   /**
     * If utf8-encoding is used, the parameter will be appended with an "u".
+    * Since there is only UTF-8 supported, it always appends the "u".
     * 
     * @param string $_regex
     * @return string
     */
   function encodeRegex($_regex)
   {
-    if($this->utf8)
-      return $_regex.'u';
-    else
-      return $_regex;
+    return $_regex.'u';
   }
   
   /**
@@ -675,7 +664,7 @@ class RexSearch
         
         foreach(preg_split($this->encodeRegex('~[[:punct:][:space:]]+~ism'), $plaintext) as $keyword)
         {
-          if($this->significantCharacterCount <= mb_strlen($keyword,$this->utf8?'UTF-8':mb_internal_encoding()))
+          if($this->significantCharacterCount <= mb_strlen($keyword,'UTF-8'))
             $keywords[] = array('search'=>$keyword,'clang'=>$langID);
         }
         
@@ -831,7 +820,7 @@ class RexSearch
           
           foreach(preg_split($this->encodeRegex('~[[:punct:][:space:]]+~ism'), $plaintext) as $keyword)
           {
-            if($this->significantCharacterCount <= mb_strlen($keyword,$this->utf8?'UTF-8':mb_internal_encoding()))
+            if($this->significantCharacterCount <= mb_strlen($keyword,'UTF-8'))
               $keywords[] = array('search'=>$keyword,'clang'=>is_null($indexData['clang'])?false:$indexData['clang']);
           }
           
@@ -950,10 +939,7 @@ class RexSearch
         {
           $tempFile = tempnam($this->generatedPath.'/files/', 'rexsearch');
           
-          if($this->utf8)
-            $encoding = 'UTF-8';
-          else
-            $encoding = 'Latin1';
+          $encoding = 'UTF-8';
           
           exec('pdftotext '.escapeshellarg($this->documentRoot.'/'.$_filename).' '.escapeshellarg($tempFile).' -enc '.$encoding, $dummy, $return);
           if($return > 0)
@@ -987,8 +973,6 @@ class RexSearch
           {
             require_once 'class.pdf2txt.inc.php';
             $text = pdf2txt::directConvert($pdfContent);
-            if(!$this->utf8)
-              $text = utf8_decode($text);
             $error = false;
           }
         }
@@ -1016,7 +1000,7 @@ class RexSearch
           return A587_FILE_NOEXIST;
     }
     
-    $text = @iconv(mb_detect_encoding($text), $this->utf8?'UTF-8':'ISO-8859-15', $text); 
+    $text = @iconv(mb_detect_encoding($text), 'UTF-8', $text); 
     
     // Plaintext
     if(empty($plaintext))
@@ -1053,7 +1037,7 @@ class RexSearch
     $keywords = array();
     foreach(preg_split($this->encodeRegex('~[[:punct:][:space:]]+~ism'), $plaintext) as $keyword)
     {
-      if($this->significantCharacterCount <= mb_strlen($keyword,$this->utf8?'UTF-8':mb_internal_encoding()))
+      if($this->significantCharacterCount <= mb_strlen($keyword,'UTF-8'))
         $keywords[] = array('search'=>$keyword,'clang'=>!isset($fileData['clang'])?false:$fileData['clang']);
     }
     $this->storeKeywords($keywords, false);
@@ -1624,7 +1608,7 @@ class RexSearch
     {
       foreach($this->searchArray as $keyword)
       {
-        $this->searchArray[] = array('search' => htmlentities($keyword['search'], ENT_COMPAT, $this->utf8?'UTF-8':mb_internal_encoding()));
+        $this->searchArray[] = array('search' => htmlentities($keyword['search'], ENT_COMPAT, 'UTF-8'));
       }
     }
     
@@ -1933,8 +1917,8 @@ class RexSearch
     foreach($_keywords as $keyword)
     {
       if(
-        !in_array(mb_strtolower($keyword['search'], $this->utf8?'UTF-8':mb_internal_encoding()), $this->blacklist) AND
-        !in_array(mb_strtolower($keyword['search'], $this->utf8?'UTF-8':mb_internal_encoding()), $this->stopwords)
+        !in_array(mb_strtolower($keyword['search'], 'UTF-8'), $this->blacklist) AND
+        !in_array(mb_strtolower($keyword['search'], 'UTF-8'), $this->stopwords)
       )
       {
         $simWords[] = sprintf(
@@ -2124,7 +2108,7 @@ class RexSearch
       
       if($this->searchEntities)
       {
-        $match .= ' + '.sprintf("(( MATCH (`%s`) AGAINST ('%s')) * %d)", implode('`,`',$searchColumns), $sql->escape(htmlentities($keyword['search'], ENT_COMPAT, $this->utf8?'UTF-8':mb_internal_encoding())), $keyword['weight']);
+        $match .= ' + '.sprintf("(( MATCH (`%s`) AGAINST ('%s')) * %d)", implode('`,`',$searchColumns), $sql->escape(htmlentities($keyword['search'], ENT_COMPAT, 'UTF-8')), $keyword['weight']);
       }
       
       $Amatch[] = $match;
@@ -2143,7 +2127,7 @@ class RexSearch
           
           if($this->searchEntities)
           {
-            $tmpWhere[] = sprintf("(`%s` LIKE '%%%s%%')", $searchColumn, str_replace(array('%','_'),array('\%','\_'),$sql->escape(htmlentities($keyword['search'], ENT_COMPAT, $this->utf8?'UTF-8':mb_internal_encoding()))));
+            $tmpWhere[] = sprintf("(`%s` LIKE '%%%s%%')", $searchColumn, str_replace(array('%','_'),array('\%','\_'),$sql->escape(htmlentities($keyword['search'], ENT_COMPAT, 'UTF-8'))));
           }
         }
         

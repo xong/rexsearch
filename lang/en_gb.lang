@@ -94,5 +94,5 @@ a587_ellipsis = …
 
 a587_cat_deleted = All articles are still included in the search index. You have to <a href="index.php?page=rexsearch&subpage=generate">regenerate the search index</a>.
 
-a587_help_wiki = The documentation of this addon can be found at <a href="http://wiki.redaxo.de/index.php?n=R4.RexSearch">http://wiki.redaxo.de/index.php?n=R4.RexSearch</a>.
-a587_help_forum = Any questions or suggestions can be asked/made at <a href="http://forum.redaxo.de/ftopic12965">http://forum.redaxo.de/ftopic12965</a>.
+a587_help_wiki = The documentation of this addon can be found at <a href="http://www.redaxo.org/de/wiki/index.php?n=R4.Rexsearch">http://www.redaxo.org/de/wiki/index.php?n=R4.Rexsearch</a>.
+a587_help_forum = Any questions or suggestions can be asked/made at <a href="http://www.redaxo.org/de/forum/addons-f30/addon-rexsearch-fulltext-search-addon-t12965.html">http://www.redaxo.org/de/forum/addons-f30/addon-rexsearch-fulltext-search-addon-t12965.html</a>.
