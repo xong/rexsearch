@@ -226,7 +226,7 @@ function a587_handle_extensionpoint($_params)
     
     // exclude (if offline) or index (if online) article
     case 'ART_STATUS':
-      if($_params['status'] OR !empty($REX['ADDON']['settings']['rexsearch']['indexoffline']))
+      if($_params['status'] == 1 OR !empty($REX['ADDON']['settings']['rexsearch']['indexoffline']))
         $rexsearch->indexArticle($_params['id'],$_params['clang']);
       else
         $rexsearch->excludeArticle($_params['id'],$_params['clang']);
@@ -268,15 +268,14 @@ function a587_handle_extensionpoint($_params)
     break;
     
     case 'CAT_STATUS':
-      if($_params['status'] OR !empty($REX['ADDON']['settings']['rexsearch']['indexoffline']))
+      if($_params['status'] == 1 OR !empty($REX['ADDON']['settings']['rexsearch']['indexoffline']))
       {
         foreach(a587_getArticles(array($_params['id'])) as $art_id => $art_name)
           $rexsearch->indexArticle($art_id, $_params['clang']);
       }
       else
       {
-        foreach(a587_getArticles(array($_params['id'])) as $art_id => $art_name)
-          $rexsearch->excludeArticle($art_id, $_params['clang']);
+        $rexsearch->excludeArticle($_params['id'], $_params['clang']);
       }
       
       foreach($rexsearch->includeColumns as $table => $columnArray)
@@ -338,7 +337,7 @@ function a587_handle_extensionpoint($_params)
     break;
     
     case 'SLICE_SHOW':
-      if(strpos($_params['subject'],'<div class="rex-message"><div class="rex-info">') AND (!empty($_params['function']) OR (!empty($_REQUEST['slice_id']) AND $_REQUEST['slice_id'] == $_params['slice_id'])))
+      if(strpos($_params['subject'],'<div class="rex-message"><div class="rex-info">') AND (!empty($_params['function']) OR (!empty($_REQUEST['slice_id']) AND $_REQUEST['slice_id'] == $_params['slice_id']) OR $_params['slice_id'] == $_params['function_slice_id'])) {
         $rexsearch->indexArticle($_params['article_id'],$_params['clang']); 
     break;
   }
