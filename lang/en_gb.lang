@@ -47,7 +47,7 @@ a587_settings_similarwords_label = Fuzzy search
 a587_settings_similarwords_none = Deactivate
 a587_settings_similarwords_soundex = Soundex
 a587_settings_similarwords_metaphone = Metaphone
-a587_settings_similarwords_cologne = Kölner Phonetik
+a587_settings_similarwords_cologne = KÃ¶lner Phonetik
 a587_settings_similarwords_all = All
 a587_settings_similarwords_permanent = Perform fuzzy search even if results are found.
 
@@ -77,8 +77,8 @@ a587_settings_generate_keywords_deleted = Keywords deleted
 a587_settings_generate_inprogress = Generating index. There will be a message when the process is complete.
 a587_settings_generate_done = Index generated
 a587_settings_generate_cancel = Indexing aborted
-a587_settings_generate_duration = Time: 
-a587_settings_generate_timeleft = Remaining: 
+a587_settings_generate_duration = Time:Â 
+a587_settings_generate_timeleft = Remaining:Â 
 
 a587_settings_fileext_header = File search
 a587_settings_fileext_label = Extensions <br />(keep empty for any files)
@@ -90,7 +90,7 @@ a587_settings_folders_dirselect_label = Select Subdirectories of depth %DEPTH%
 a587_settings_show_all = Show all
 a587_settings_show_none = Hide all
 
-a587_ellipsis = …
+a587_ellipsis = â€¦
 
 a587_cat_deleted = All articles are still included in the search index. You have to <a href="index.php?page=rexsearch&subpage=generate">regenerate the search index</a>.
 
