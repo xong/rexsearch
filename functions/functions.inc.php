@@ -312,6 +312,9 @@ function a587_handle_extensionpoint($_params)
     break;
     
     case 'MEDIA_ADDED':
+      //var_dump($_params);
+      $rexsearch->indexFile(str_replace('\\','/',substr($rexsearch->mediaFolder, strlen($rexsearch->documentRoot))).'/'.$_params['filename']);
+      
       foreach($rexsearch->includeColumns as $table => $columnArray)
       {
         if($table == $REX['TABLE_PREFIX'].'file')
@@ -323,6 +326,22 @@ function a587_handle_extensionpoint($_params)
     break;
     
     case 'MEDIA_UPDATED':
+      $rexsearch->indexFile(str_replace('\\','/',substr($rexsearch->mediaFolder, strlen($rexsearch->documentRoot))).'/'.$_params['filename']);
+      
+      foreach($rexsearch->includeColumns as $table => $columnArray)
+      {
+        if($table == $REX['TABLE_PREFIX'].'file')
+        {
+          foreach($columnArray as $column)
+            $rexsearch->indexColumn($table, $column, 'id', $_params['file_id']);
+        }
+      }
+    break;
+    
+    case 'MEDIA_DELETED':
+      //var_dump($_params);exit;
+      $rexsearch->indexFile(str_replace('\\','/',substr($rexsearch->mediaFolder, strlen($rexsearch->documentRoot))).'/'.$_params['filename']);
+      
       foreach($rexsearch->includeColumns as $table => $columnArray)
       {
         if($table == $REX['TABLE_PREFIX'].'file')

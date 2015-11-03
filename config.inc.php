@@ -92,6 +92,7 @@ if($REX['REDAXO'] AND $REX['ADDON']['settings'][$mypage]['automaticindex'] == '1
     'CAT_UPDATED',
     'MEDIA_ADDED',
     'MEDIA_UPDATED',
+    'MEDIA_DELETED',
     'SLICE_UPDATED'
   );
   
