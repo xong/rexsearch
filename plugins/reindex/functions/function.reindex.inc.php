@@ -1,6 +1,8 @@
 <?php
 function a587_rexsearch_reindex($_params)
 {
+  global $REX;
+  
   $columns = array();
   $id = 0;
 
